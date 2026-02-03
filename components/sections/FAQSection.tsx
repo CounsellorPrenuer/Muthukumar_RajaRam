@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import { SectionProps } from '@/lib/sections/registry'
@@ -7,9 +7,9 @@ export function FAQSection({ heading, faqs }: SectionProps) {
   const [openIdx, setOpenIdx] = React.useState<number | null>(null)
 
   return (
-    <section style={{ padding: '80px 20px', backgroundColor: '#f8f9fa' }}>
+    <section style={{ padding: '80px 20px', backgroundColor: 'var(--color-surface)' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        {heading && <h2 style={{ fontSize: '2.5rem', marginBottom: '60px', textAlign: 'center' }}>{heading}</h2>}
+        {heading && <h2 style={{ fontSize: '2.5rem', marginBottom: '60px', textAlign: 'center', color: 'var(--color-text-primary)' }}>{heading}</h2>}
 
         {faqs && faqs.length > 0 && (
           <div>
@@ -18,7 +18,7 @@ export function FAQSection({ heading, faqs }: SectionProps) {
                 key={idx}
                 style={{
                   marginBottom: '20px',
-                  borderBottom: '1px solid #ddd',
+                  borderBottom: '1px solid var(--color-border)',
                   paddingBottom: '20px',
                 }}
               >
@@ -36,14 +36,15 @@ export function FAQSection({ heading, faqs }: SectionProps) {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    color: 'var(--color-text-primary)',
                   }}
                 >
                   {faq.question}
-                  <span style={{ marginLeft: '10px' }}>{openIdx === idx ? '▼' : '▶'}</span>
+                  <span style={{ marginLeft: '10px', fontSize: '0.8em' }}>{openIdx === idx ? '▼' : '▶'}</span>
                 </button>
 
                 {openIdx === idx && faq.answer && (
-                  <p style={{ marginTop: '15px', color: '#666', lineHeight: '1.6' }}>{faq.answer}</p>
+                  <p style={{ marginTop: '15px', color: 'var(--color-text-secondary)', lineHeight: '1.6' }}>{faq.answer}</p>
                 )}
               </div>
             ))}
@@ -53,3 +54,4 @@ export function FAQSection({ heading, faqs }: SectionProps) {
     </section>
   )
 }
+

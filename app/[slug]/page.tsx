@@ -18,25 +18,61 @@ export default async function Page({ params }: { params: PageParams }) {
     notFound()
   }
 
+  // Log fetched sections for debugging
+  console.log(`[Page: ${params.slug}] Fetched ${page.sections?.length || 0} sections:`, 
+    page.sections?.map((s: any) => s._type) || [])
+
+  // Separate footer from other sections to ensure it renders last
+  const allSections = page.sections || []
+  const footerSection = allSections.find((s: SectionProps) => s._type === 'footerSection')
+  const regularSections = allSections.filter((s: SectionProps) => s._type !== 'footerSection')
+
   return (
     <main>
-      {/* Render each section in order */}
-      {page.sections && page.sections.length > 0 ? (
-        page.sections.map((section: SectionProps, idx: number) => {
+      {/* Render regular sections first */}
+      {regularSections.length > 0 ? (
+        regularSections.map((section: SectionProps, idx: number) => {
           const Component = getSectionComponent(section._type)
 
           if (!Component) {
-            console.warn(`No component found for section type: ${section._type}`)
-            return null
+            console.error(`[RENDERING ERROR] No component found for section type: ${section._type}`)
+            // Render error placeholder in development
+            return (
+              <div key={section._key || idx} style={{ 
+                padding: '20px', 
+                margin: '20px', 
+                backgroundColor: 'var(--color-surface)', 
+                border: '2px solid var(--color-primary)',
+                borderRadius: '4px'
+              }}>
+                <p style={{ margin: 0, color: 'var(--color-text-primary)' }}>
+                  ⚠️ Missing component for section type: <strong>{section._type}</strong>
+                </p>
+              </div>
+            )
           }
 
+          console.log(`[Rendering] ${section._type}`)
           return <Component key={section._key || idx} {...section} />
         })
       ) : (
-        <div style={{ padding: '40px', textAlign: 'center', color: '#999' }}>
+        <div style={{ padding: '40px', textAlign: 'center', color: 'var(--color-text-secondary)' }}>
           <p>No sections added to this page yet.</p>
+          <p style={{ fontSize: '0.875rem', marginTop: '10px' }}>
+            Add sections to this page in Sanity Studio.
+          </p>
         </div>
       )}
+
+      {/* Render footer last, if it exists */}
+      {footerSection && (() => {
+        const FooterComponent = getSectionComponent(footerSection._type)
+        if (FooterComponent) {
+          console.log(`[Rendering Footer Last] ${footerSection._type}`)
+          return <FooterComponent key={footerSection._key || 'footer'} {...footerSection} />
+        }
+        return null
+      })()}
     </main>
   )
 }

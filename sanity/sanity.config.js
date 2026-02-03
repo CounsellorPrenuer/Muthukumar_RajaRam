@@ -13,7 +13,7 @@ export default defineConfig({
   name: 'default',
   title: 'Professional Website CMS',
   
-  projectId: '146e0vmd',  // Get from sanity.io/manage
+  projectId: '6w0t9e7l',  // Get from sanity.io/manage
   dataset: 'production',
   
   plugins: [

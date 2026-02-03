@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { SectionProps } from '@/lib/sections/registry'
 
@@ -21,18 +21,18 @@ export function TestimonialsSection({ heading, testimonials }: SectionProps) {
                 key={idx}
                 style={{
                   padding: '30px',
-                  backgroundColor: '#f8f9fa',
+                  backgroundColor: 'var(--color-surface)',
                   borderRadius: '8px',
-                  borderLeft: '4px solid #667eea',
+                  borderLeft: '4px solid var(--color-primary)',
                 }}
               >
                 {testimonial.rating && (
-                  <div style={{ fontSize: '1.2rem', marginBottom: '15px', color: '#ffc107' }}>
-                    {'⭐'.repeat(testimonial.rating)}
+                  <div style={{ fontSize: '1.2rem', marginBottom: '15px', color: 'var(--color-primary)' }}>
+                    {'\u2605'.repeat(testimonial.rating)}
                   </div>
                 )}
                 {testimonial.quote && (
-                  <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '20px', color: '#333' }}>
+                  <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '20px', color: 'var(--color-text-primary)' }}>
                     "{testimonial.quote}"
                   </p>
                 )}
@@ -40,7 +40,7 @@ export function TestimonialsSection({ heading, testimonials }: SectionProps) {
                   {testimonial.author && (
                     <strong style={{ display: 'block', marginBottom: '5px' }}>{testimonial.author}</strong>
                   )}
-                  {testimonial.role && <small style={{ color: '#666' }}>{testimonial.role}</small>}
+                  {testimonial.role && <small style={{ color: 'var(--color-text-secondary)' }}>{testimonial.role}</small>}
                 </div>
               </div>
             ))}
@@ -50,3 +50,5 @@ export function TestimonialsSection({ heading, testimonials }: SectionProps) {
     </section>
   )
 }
+
+

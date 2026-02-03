@@ -22,35 +22,24 @@ export const page = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'description',
-          title: 'Meta Description',
-          type: 'string',
-          validation: (rule) => rule.max(160),
-        }),
-        defineField({
-          name: 'keywords',
-          title: 'Keywords',
-          type: 'array',
-          of: [{ type: 'string' }],
-        }),
-      ],
-    }),
-    defineField({
       name: 'sections',
       title: 'Page Sections',
       type: 'array',
       of: [
         { type: 'heroSection' },
+        { type: 'aboutSection' },
+        { type: 'serviceSection' },
+        { type: 'testimonialSection' },
+        { type: 'contactSection' },
+        { type: 'footerSection' },
         { type: 'featuresSection' },
         { type: 'testimonialsSection' },
         { type: 'faqSection' },
         { type: 'ctaSection' },
       ],
+      options: {
+        layout: 'list',
+      },
     }),
   ],
   preview: {

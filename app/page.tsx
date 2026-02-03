@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <main style={{ padding: '40px', textAlign: 'center', minHeight: '100vh' }}>
       <h1>Welcome to Your Remixable Template</h1>
-      <p style={{ fontSize: '1.1rem', color: '#666', maxWidth: '600px', margin: '20px auto' }}>
+      <p style={{ fontSize: '1.1rem', color: 'var(--color-text-secondary)', maxWidth: '600px', margin: '20px auto' }}>
         This is a section-based website template powered by Sanity CMS.
       </p>
       <p>
@@ -25,8 +25,8 @@ export default async function Home() {
           href="/admin"
           style={{
             display: 'inline-block',
-            backgroundColor: '#667eea',
-            color: 'white',
+            backgroundColor: 'var(--color-primary)',
+            color: 'var(--color-background)',
             padding: '12px 30px',
             borderRadius: '4px',
             textDecoration: 'none',
@@ -35,7 +35,7 @@ export default async function Home() {
           Manage Content in Sanity
         </a>
       </p>
-      <p style={{ marginTop: '40px', color: '#999', fontSize: '0.9rem' }}>
+      <p style={{ marginTop: '40px', color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
         Create a page with slug "home" in Sanity to get started.
       </p>
     </main>

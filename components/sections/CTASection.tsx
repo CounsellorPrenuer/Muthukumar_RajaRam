@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { SectionProps } from '@/lib/sections/registry'
 
@@ -7,8 +7,8 @@ export function CTASection({ heading, description, backgroundColor, buttons }: S
     <section
       style={{
         padding: '80px 20px',
-        backgroundColor: backgroundColor || '#667eea',
-        color: 'white',
+        backgroundColor: backgroundColor || 'var(--color-primary)',
+        color: 'var(--color-background)',
         textAlign: 'center',
       }}
     >
@@ -38,12 +38,12 @@ export function CTASection({ heading, description, backgroundColor, buttons }: S
                   backgroundColor:
                     button.style === 'secondary'
                       ? 'rgba(255, 255, 255, 0.2)'
-                      : 'white',
+                      : 'var(--color-background)',
                   color:
                     button.style === 'secondary'
-                      ? 'white'
-                      : '#667eea',
-                  border: button.style === 'secondary' ? '2px solid white' : 'none',
+                      ? 'var(--color-background)'
+                      : 'var(--color-primary)',
+                  border: button.style === 'secondary' ? '2px solid var(--color-background)' : 'none',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                 }}
@@ -57,3 +57,4 @@ export function CTASection({ heading, description, backgroundColor, buttons }: S
     </section>
   )
 }
+

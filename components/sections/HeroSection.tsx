@@ -1,20 +1,23 @@
-'use client'
+﻿'use client'
 
 import { SectionProps } from '@/lib/sections/registry'
+import { urlForImage } from '@/lib/sanity'
 
 export function HeroSection({ heading, subheading, backgroundImage, cta }: SectionProps) {
+  const bgImageUrl = backgroundImage ? urlForImage(backgroundImage).width(1920).height(800).url() : undefined
+
   return (
     <section
       className="hero-section"
       style={{
-        backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
+        backgroundImage: bgImageUrl ? `url(${bgImageUrl})` : 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         minHeight: '500px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'white',
+        color: 'var(--color-background)',
         textAlign: 'center',
       }}
     >
@@ -32,8 +35,8 @@ export function HeroSection({ heading, subheading, backgroundImage, cta }: Secti
             href={cta.link || '#'}
             style={{
               display: 'inline-block',
-              backgroundColor: '#667eea',
-              color: 'white',
+              backgroundColor: 'var(--color-primary)',
+              color: 'var(--color-background)',
               padding: '12px 30px',
               borderRadius: '4px',
               textDecoration: 'none',
@@ -47,3 +50,4 @@ export function HeroSection({ heading, subheading, backgroundImage, cta }: Secti
     </section>
   )
 }
+

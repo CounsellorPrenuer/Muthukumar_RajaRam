@@ -1,9 +1,10 @@
-/**
+﻿/**
  * SANITY CLIENT CONFIGURATION
  * Initializes the Sanity client for fetching content
  */
 
 import { createClient } from '@sanity/client'
+import imageUrlBuilder from '@sanity/image-url'
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
@@ -20,6 +21,15 @@ export const sanityClient = createClient({
   useCdn: true,
   perspective: 'published',
 })
+
+/**
+ * Image URL builder for Sanity images
+ */
+const builder = imageUrlBuilder(sanityClient)
+
+export function urlForImage(source: any) {
+  return builder.image(source)
+}
 
 /**
  * Fetch a page by slug
@@ -65,6 +75,53 @@ export async function getAllPages() {
       title,
       slug,
       seo
+    }
+  `
+
+  return sanityClient.fetch(query)
+}
+
+/**
+ * Fetch navbar configuration
+ */
+export async function getNavbar() {
+  const query = `
+    *[_type == "navbar"][0] {
+      links[] {
+        label,
+        href
+      }
+    }
+  `
+
+  return sanityClient.fetch(query)
+}
+
+/**
+ * Fetch site configuration
+ */
+export async function getSiteConfig() {
+  const query = `
+    *[_type == "site"][0] {
+      title,
+      description,
+      logo,
+      logoImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      primaryColor,
+      primaryHoverColor,
+      backgroundColor,
+      surfaceColor,
+      textPrimary,
+      textSecondary,
+      borderColor,
+      footerBackground,
+      footerText
     }
   `
 

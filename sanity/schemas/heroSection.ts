@@ -23,6 +23,14 @@ export const heroSection = defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
+          description: 'Important for accessibility and SEO',
+        },
+      ],
     }),
     defineField({
       name: 'cta',
