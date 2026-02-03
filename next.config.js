@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/DC-John',
+  basePath: '/DC_JOHN',
   reactStrictMode: true,
   images: {
     unoptimized: true,
