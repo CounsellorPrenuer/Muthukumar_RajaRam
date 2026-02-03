@@ -18,13 +18,19 @@ export default async function RootLayout({
   let siteConfig = null
 
   try {
-    navbar = await getNavbar()
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Timeout')), 3000)
+    )
+    navbar = await Promise.race([getNavbar(), timeoutPromise])
   } catch (error) {
     console.log('[Layout] Navbar fetch failed, using defaults')
   }
 
   try {
-    siteConfig = await getSiteConfig()
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Timeout')), 3000)
+    )
+    siteConfig = await Promise.race([getSiteConfig(), timeoutPromise])
   } catch (error) {
     console.log('[Layout] SiteConfig fetch failed, using defaults')
   }
