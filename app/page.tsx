@@ -1,19 +1,40 @@
 import { getPageBySlug } from '@/lib/sanity'
-import { redirect } from 'next/navigation'
 
 /**
  * Root page / home
- * Redirects to the "home" page slug or shows welcome
+ * Shows welcome page or home content
  */
 export default async function Home() {
   // Try to fetch the "home" page
   const homePage = await getPageBySlug('home')
 
+  // If home page exists in Sanity, render it directly
   if (homePage) {
-    redirect('/DC-John/home')
+    const { getSectionComponent } = await import('@/lib/sections/registry')
+    const allSections = homePage.sections || []
+    const footerSection = allSections.find((s: any) => s._type === 'footerSection')
+    const regularSections = allSections.filter((s: any) => s._type !== 'footerSection')
+
+    return (
+      <main>
+        {regularSections.length > 0 ? (
+          regularSections.map((section: any, idx: number) => {
+            const Component = getSectionComponent(section._type)
+            if (!Component) return null
+            return <Component key={section._key || idx} {...section} />
+          })
+        ) : null}
+        {footerSection && (() => {
+          const { getSectionComponent } = require('@/lib/sections/registry')
+          const FooterComponent = getSectionComponent(footerSection._type)
+          if (FooterComponent) return <FooterComponent key={footerSection._key || 'footer'} {...footerSection} />
+          return null
+        })()}
+      </main>
+    )
   }
 
-  // Fallback welcome message
+  // Fallback welcome message if no home page found
   return (
     <main style={{ padding: '40px', textAlign: 'center', minHeight: '100vh' }}>
       <h1>Welcome to Your Remixable Template</h1>
@@ -22,7 +43,7 @@ export default async function Home() {
       </p>
       <p>
         <a
-          href="/admin"
+          href="/DC-John/admin"
           style={{
             display: 'inline-block',
             backgroundColor: 'var(--color-primary)',
