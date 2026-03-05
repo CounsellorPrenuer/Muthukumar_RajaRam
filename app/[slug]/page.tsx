@@ -1,4 +1,6 @@
 import { getPageBySlug, getAllPageSlugs } from '@/lib/sanity'
+
+export const revalidate = 0
 import { getSectionComponent, SectionProps } from '@/lib/sections/registry'
 import { notFound } from 'next/navigation'
 import React from 'react'
@@ -16,7 +18,7 @@ export default async function Page({ params }: { params: PageParams }) {
 
   try {
     // Add 5-second timeout for Sanity fetch
-    const timeoutPromise = new Promise((_, reject) => 
+    const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Timeout')), 5000)
     )
     page = await Promise.race([getPageBySlug(params.slug), timeoutPromise])
@@ -29,7 +31,7 @@ export default async function Page({ params }: { params: PageParams }) {
   }
 
   // Log fetched sections for debugging
-  console.log(`[Page: ${params.slug}] Fetched ${page.sections?.length || 0} sections:`, 
+  console.log(`[Page: ${params.slug}] Fetched ${page.sections?.length || 0} sections:`,
     page.sections?.map((s: any) => s._type) || [])
 
   // Separate footer from other sections to ensure it renders last
@@ -48,10 +50,10 @@ export default async function Page({ params }: { params: PageParams }) {
             console.error(`[RENDERING ERROR] No component found for section type: ${section._type}`)
             // Render error placeholder in development
             return (
-              <div key={section._key || idx} style={{ 
-                padding: '20px', 
-                margin: '20px', 
-                backgroundColor: 'var(--color-surface)', 
+              <div key={section._key || idx} style={{
+                padding: '20px',
+                margin: '20px',
+                backgroundColor: 'var(--color-surface)',
                 border: '2px solid var(--color-primary)',
                 borderRadius: '4px'
               }}>
@@ -87,24 +89,33 @@ export default async function Page({ params }: { params: PageParams }) {
   )
 }
 
-/**
- * Generate static params for all pages at build time
- * For static export without Sanity, return empty array
- */
 export async function generateStaticParams() {
   try {
-    const pages = await getAllPageSlugs()
-    return pages.map((page: any) => ({
-      slug: page.slug,
+    const [pages, navbar] = await Promise.race([
+      Promise.all([
+        getAllPageSlugs(),
+        import('@/lib/sanity').then(m => m.getNavbar())
+      ]),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+    ]) as [any[], any]
+
+    const pageSlugs = pages.map((page: any) => page.slug)
+    const navbarSlugs = navbar?.links?.map((link: any) => {
+      const href = link.href || ''
+      if (href.startsWith('/') && href.length > 1) {
+        return href.substring(1).split('#')[0]
+      }
+      return null
+    }).filter(Boolean) || []
+
+    // Combine and remove duplicates, including explicit common ones
+    const allSlugs = Array.from(new Set([...pageSlugs, ...navbarSlugs, 'about', 'services', 'contact']))
+
+    return allSlugs.map((slug) => ({
+      slug,
     }))
   } catch (error) {
-    console.log('[generateStaticParams] Sanity unreachable, returning empty params')
-    return []
+    console.log('[generateStaticParams] Fetch failed, returning fallback slugs', error)
+    return [{ slug: 'about' }, { slug: 'services' }, { slug: 'contact' }]
   }
 }
-
-/**
- * Enable Incremental Static Regeneration (ISR)
- * Revalidate every 60 seconds
- */
-export const revalidate = 60

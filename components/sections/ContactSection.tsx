@@ -36,7 +36,7 @@ export function ContactSection({ title, description, email, phone, address, form
       )}
       <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         {title && (
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '10px', textAlign: 'center', color: 'var(--color-text-primary)' }}>
+          <h2 style={{ fontSize: '3rem', marginBottom: '10px', textAlign: 'center', color: 'var(--color-primary)', fontWeight: '700' }}>
             {title}
           </h2>
         )}
@@ -57,19 +57,32 @@ export function ContactSection({ title, description, email, phone, address, form
         >
           {/* Contact Information - Only show if we have contact details */}
           {hasContactInfo && (
-            <div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', color: 'var(--color-text-primary)' }}>Get in Touch</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div
+              style={{
+                backgroundColor: 'var(--color-background)',
+                padding: '40px',
+                borderRadius: '16px',
+                boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.05)',
+                border: '1px solid rgba(0,0,0,0.05)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              <h3 style={{ fontSize: '1.75rem', marginBottom: '30px', color: 'var(--color-text-primary)', fontWeight: '600' }}>Get in Touch</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {email && (
-                  <div>
-                    <strong style={{ display: 'block', marginBottom: '5px', color: 'var(--color-text-primary)', fontSize: '0.875rem' }}>Email</strong>
-                    <a 
-                      href={`mailto:${email}`} 
-                      style={{ 
-                        color: 'var(--color-primary)', 
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <strong style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Email</strong>
+                    <a
+                      href={`mailto:${email}`}
+                      style={{
+                        color: 'var(--color-primary)',
                         textDecoration: 'none',
-                        fontSize: '1rem',
+                        fontSize: '1.1rem',
+                        fontWeight: '500',
                         transition: 'opacity 0.2s',
+                        display: 'inline-block',
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
                       onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
@@ -79,15 +92,17 @@ export function ContactSection({ title, description, email, phone, address, form
                   </div>
                 )}
                 {phone && (
-                  <div>
-                    <strong style={{ display: 'block', marginBottom: '5px', color: 'var(--color-text-primary)', fontSize: '0.875rem' }}>Phone</strong>
-                    <a 
-                      href={`tel:${phone}`} 
-                      style={{ 
-                        color: 'var(--color-primary)', 
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <strong style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Phone</strong>
+                    <a
+                      href={`tel:${phone}`}
+                      style={{
+                        color: 'var(--color-primary)',
                         textDecoration: 'none',
-                        fontSize: '1rem',
+                        fontSize: '1.1rem',
+                        fontWeight: '500',
                         transition: 'opacity 0.2s',
+                        display: 'inline-block',
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
                       onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
@@ -97,9 +112,9 @@ export function ContactSection({ title, description, email, phone, address, form
                   </div>
                 )}
                 {address && (
-                  <div>
-                    <strong style={{ display: 'block', marginBottom: '5px', color: 'var(--color-text-primary)', fontSize: '0.875rem' }}>Address</strong>
-                    <p style={{ color: 'var(--color-text-secondary)', margin: 0, lineHeight: '1.6', fontSize: '1rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <strong style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Address</strong>
+                    <p style={{ color: 'var(--color-text-primary)', margin: 0, lineHeight: '1.6', fontSize: '1.1rem' }}>
                       {address}
                     </p>
                   </div>
@@ -109,63 +124,115 @@ export function ContactSection({ title, description, email, phone, address, form
           )}
 
           {/* Contact Form */}
-          <div>
-            {formTitle && <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', color: 'var(--color-text-primary)' }}>{formTitle}</h3>}
+          <div
+            style={{
+              backgroundColor: 'var(--color-background)',
+              padding: '40px',
+              borderRadius: '16px',
+              boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.05)',
+              border: '1px solid rgba(0,0,0,0.05)',
+            }}
+          >
+            {formTitle && <h3 style={{ fontSize: '1.75rem', marginBottom: '30px', color: 'var(--color-text-primary)', fontWeight: '600' }}>{formTitle}</h3>}
             <form
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '15px',
+                gap: '20px',
               }}
             >
               <input
                 type="text"
                 placeholder="Your Name"
                 style={{
-                  padding: '12px',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: '4px',
+                  padding: '16px',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: '8px',
                   fontSize: '1rem',
-                  backgroundColor: 'var(--color-background)',
+                  backgroundColor: 'var(--color-surface)',
                   color: 'var(--color-text-primary)',
+                  transition: 'border-color 0.3s, box-shadow 0.3s',
+                  outline: 'none',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--color-primary)'
+                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(var(--color-primary-rgb), 0.1)'
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'
+                  e.currentTarget.style.boxShadow = 'none'
                 }}
               />
               <input
                 type="email"
                 placeholder="Your Email"
                 style={{
-                  padding: '12px',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: '4px',
+                  padding: '16px',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: '8px',
                   fontSize: '1rem',
-                  backgroundColor: 'var(--color-background)',
+                  backgroundColor: 'var(--color-surface)',
                   color: 'var(--color-text-primary)',
+                  transition: 'border-color 0.3s, box-shadow 0.3s',
+                  outline: 'none',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--color-primary)'
+                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(var(--color-primary-rgb), 0.1)'
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'
+                  e.currentTarget.style.boxShadow = 'none'
                 }}
               />
               <textarea
                 placeholder="Your Message"
                 rows={5}
                 style={{
-                  padding: '12px',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: '4px',
+                  padding: '16px',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  borderRadius: '8px',
                   fontSize: '1rem',
                   resize: 'vertical',
-                  backgroundColor: 'var(--color-background)',
+                  backgroundColor: 'var(--color-surface)',
                   color: 'var(--color-text-primary)',
+                  transition: 'border-color 0.3s, box-shadow 0.3s',
+                  outline: 'none',
+                  minHeight: '120px',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--color-primary)'
+                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(var(--color-primary-rgb), 0.1)'
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'
+                  e.currentTarget.style.boxShadow = 'none'
                 }}
               />
               <button
                 type="submit"
                 style={{
-                  padding: '12px 30px',
+                  padding: '16px 32px',
                   backgroundColor: 'var(--color-primary)',
                   color: 'var(--color-background)',
                   border: 'none',
-                  borderRadius: '4px',
-                  fontSize: '1rem',
+                  borderRadius: '8px',
+                  fontSize: '1.1rem',
                   cursor: 'pointer',
-                  fontWeight: '500',
+                  fontWeight: '600',
+                  marginTop: '10px',
+                  transition: 'transform 0.2s, box-shadow 0.2s, opacity 0.2s',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)'
+                  e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                  e.currentTarget.style.opacity = '0.9'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  e.currentTarget.style.opacity = '1'
                 }}
               >
                 Send Message

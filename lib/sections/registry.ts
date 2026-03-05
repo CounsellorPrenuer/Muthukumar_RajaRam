@@ -14,7 +14,7 @@ import { FeaturesSection } from '@/components/sections/FeaturesSection'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { FAQSection } from '@/components/sections/FAQSection'
 import { CTASection } from '@/components/sections/CTASection'
-
+import { MentoriaPackagesSection } from '../../components/sections/MentoriaPackagesSection'
 export interface SectionProps {
   _key: string
   _type: string
@@ -36,6 +36,7 @@ export const sectionRegistry = {
   testimonialsSection: TestimonialsSection,
   faqSection: FAQSection,
   ctaSection: CTASection,
+  mentoriaPackagesSection: MentoriaPackagesSection,
 } as const
 
 /**

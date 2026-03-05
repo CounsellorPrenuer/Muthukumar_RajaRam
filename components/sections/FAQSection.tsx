@@ -3,13 +3,13 @@
 import React from 'react'
 import { SectionProps } from '@/lib/sections/registry'
 
-export function FAQSection({ heading, faqs }: SectionProps) {
+export function FAQSection({ heading, faqs, id }: SectionProps) {
   const [openIdx, setOpenIdx] = React.useState<number | null>(null)
 
   return (
-    <section style={{ padding: '80px 20px', backgroundColor: 'var(--color-surface)' }}>
+    <section id={id || 'faq'} style={{ padding: '80px 20px', backgroundColor: 'var(--color-surface)' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-        {heading && <h2 style={{ fontSize: '2.5rem', marginBottom: '60px', textAlign: 'center', color: 'var(--color-text-primary)' }}>{heading}</h2>}
+        {heading && <h2 style={{ fontSize: '3rem', marginBottom: '60px', textAlign: 'center', color: 'var(--color-primary)', fontWeight: '700' }}>{heading}</h2>}
 
         {faqs && faqs.length > 0 && (
           <div>

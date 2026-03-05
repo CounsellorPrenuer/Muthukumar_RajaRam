@@ -2,11 +2,11 @@
 
 import { SectionProps } from '@/lib/sections/registry'
 
-export function FeaturesSection({ heading, description, features }: SectionProps) {
+export function FeaturesSection({ heading, description, features, id }: SectionProps) {
   return (
-    <section style={{ padding: '80px 20px', backgroundColor: 'var(--color-surface)' }}>
+    <section id={id || 'features'} style={{ padding: '80px 20px', backgroundColor: 'var(--color-surface)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        {heading && <h2 style={{ fontSize: '2.5rem', marginBottom: '10px', textAlign: 'center' }}>{heading}</h2>}
+        {heading && <h2 style={{ fontSize: '3rem', marginBottom: '10px', textAlign: 'center', color: 'var(--color-primary)', fontWeight: '700' }}>{heading}</h2>}
         {description && (
           <p style={{ fontSize: '1.1rem', marginBottom: '60px', textAlign: 'center', color: 'var(--color-text-secondary)' }}>
             {description}

@@ -2,9 +2,10 @@
 
 import { SectionProps } from '@/lib/sections/registry'
 
-export function CTASection({ heading, description, backgroundColor, buttons }: SectionProps) {
+export function CTASection({ heading, description, backgroundColor, buttons, id }: SectionProps) {
   return (
     <section
+      id={id || 'cta'}
       style={{
         padding: '80px 20px',
         backgroundColor: backgroundColor || 'var(--color-primary)',

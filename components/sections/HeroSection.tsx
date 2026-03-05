@@ -8,6 +8,7 @@ export function HeroSection({ heading, subheading, backgroundImage, cta }: Secti
 
   return (
     <section
+      id="home"
       className="hero-section"
       style={{
         backgroundImage: bgImageUrl ? `url(${bgImageUrl})` : 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%)',

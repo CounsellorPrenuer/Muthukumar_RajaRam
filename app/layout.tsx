@@ -1,5 +1,7 @@
 ﻿import type { Metadata } from 'next'
 import React from 'react'
+
+export const revalidate = 0 // Disable caching to show changes immediately
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { getNavbar, getSiteConfig } from '@/lib/sanity'
@@ -18,7 +20,7 @@ export default async function RootLayout({
   let siteConfig = null
 
   try {
-    const timeoutPromise = new Promise((_, reject) => 
+    const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Timeout')), 3000)
     )
     navbar = await Promise.race([getNavbar(), timeoutPromise])
@@ -27,7 +29,7 @@ export default async function RootLayout({
   }
 
   try {
-    const timeoutPromise = new Promise((_, reject) => 
+    const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Timeout')), 3000)
     )
     siteConfig = await Promise.race([getSiteConfig(), timeoutPromise])
@@ -37,10 +39,10 @@ export default async function RootLayout({
 
   // Define CSS variables from Sanity with sensible defaults
   const cssVars = {
-    '--color-primary': siteConfig?.primaryColor || '#667eea',
-    '--color-primary-hover': siteConfig?.primaryHoverColor || '#5568d3',
+    '--color-primary': siteConfig?.primaryColor || '#2563eb', // Royal Blue
+    '--color-primary-hover': siteConfig?.primaryHoverColor || '#1d4ed8', // Deeper Blue
     '--color-background': siteConfig?.backgroundColor || '#ffffff',
-    '--color-surface': siteConfig?.surfaceColor || '#f8f9fa',
+    '--color-surface': siteConfig?.surfaceColor || '#f0f7ff', // Very light blue
     '--color-text-primary': siteConfig?.textPrimary || '#333333',
     '--color-text-secondary': siteConfig?.textSecondary || '#666666',
     '--color-border': siteConfig?.borderColor || '#e0e0e0',
@@ -48,16 +50,24 @@ export default async function RootLayout({
     '--color-footer-text': siteConfig?.footerText || '#ffffff',
   } as React.CSSProperties
 
+  const allPages = await import('@/lib/sanity').then(m => m.getAllPages())
+  const pages = allPages?.filter((p: any) => p.slug?.toLowerCase() !== 'home') || []
+
   return (
     <html lang="en">
-      <body 
+      <body
         style={{
           margin: 0,
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
           ...cssVars
         }}
       >
-        <Navbar logo={siteConfig?.logo} logoImage={siteConfig?.logoImage} links={navbar?.links} />
+        <Navbar
+          logo={siteConfig?.logo}
+          logoImage={siteConfig?.logoImage}
+          links={navbar?.links}
+          pages={pages}
+        />
         {children}
       </body>
     </html>

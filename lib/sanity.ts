@@ -14,11 +14,14 @@ if (!projectId) {
   throw new Error('NEXT_PUBLIC_SANITY_PROJECT_ID is not set')
 }
 
+const token = process.env.SANITY_API_TOKEN
+
 export const sanityClient = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  useCdn: false, // Turn off CDN when using token for freshest data
+  token,
   perspective: 'published',
 })
 
@@ -73,7 +76,7 @@ export async function getAllPages() {
     *[_type == "page"] {
       _id,
       title,
-      slug,
+      "slug": slug.current,
       seo
     }
   `
@@ -122,6 +125,37 @@ export async function getSiteConfig() {
       borderColor,
       footerBackground,
       footerText
+    }
+  `
+
+  return sanityClient.fetch(query)
+}
+
+/**
+ * Fetch legacy top-level documents used as a homepage fallback
+ * when a page document (e.g., slug=home) does not exist.
+ */
+export async function getLegacyHomeContent() {
+  const query = `
+    {
+      "site": *[_type == "site"][0],
+      "hero": *[_type == "hero"][0],
+      "about": *[_type == "about"][0],
+      "services": *[_type == "service"] | order(order asc),
+      "contact": *[_type == "contact"][0],
+      "testimonials": *[_type == "testimonial"] | order(order asc),
+      "mentoriaPackages": *[_type == "mentoriaPackages"][0] {
+        ...,
+        categories[] {
+          ...,
+          packages[] {
+            ...,
+            badgeText,
+            unavailableFeatures
+          }
+        }
+      },
+      "footer": *[_type == "footer"][0]
     }
   `
 
