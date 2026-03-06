@@ -11,6 +11,12 @@ export default {
   
   fields: [
     {
+      name: 'tagline',
+      title: 'Tagline',
+      type: 'string',
+      description: 'Small text above headline (e.g., "Welcome to our site")'
+    },
+    {
       name: 'headline',
       title: 'Headline',
       type: 'string',

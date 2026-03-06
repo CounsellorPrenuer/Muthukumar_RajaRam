@@ -76,7 +76,7 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
             id={id || 'packages'}
             style={{
                 padding: '80px 20px',
-                backgroundColor: '#f0f7ff',
+                backgroundColor: 'var(--color-background)',
                 fontFamily: 'system-ui, -apple-system, sans-serif'
             }}
         >
@@ -86,7 +86,7 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                     <h2 style={{ fontSize: '3rem', color: 'var(--color-primary)', marginBottom: '15px', fontWeight: '700', textAlign: 'center' }}>
                         {title || 'Mentoria Packages'}
                     </h2>
-                    <p style={{ fontSize: '1.2rem', color: '#475569' }}>
+                    <p style={{ fontSize: '1.2rem', color: 'var(--color-text-secondary)' }}>
                         {subtitle || 'Choose the right Mentoria plan for your career growth'}
                     </p>
                 </div>
@@ -118,8 +118,8 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                         padding: '12px 24px',
                                         borderRadius: '30px',
                                         border: 'none',
-                                        backgroundColor: isActive ? '#3b82f6' : '#ffffff',
-                                        color: isActive ? '#ffffff' : '#3b82f6',
+                                        backgroundColor: isActive ? 'var(--color-primary)' : '#ffffff',
+                                        color: isActive ? '#ffffff' : 'var(--color-primary)',
                                         fontSize: '0.95rem',
                                         fontWeight: '600',
                                         cursor: 'pointer',
@@ -150,7 +150,7 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                     width: '100%',
                                     maxWidth: '450px',
                                     boxShadow: '0 10px 30px -10px rgba(0,0,0,0.1)',
-                                    border: '1px solid #eaeaea',
+                                    border: '1px solid var(--color-border)',
                                     position: 'relative',
                                     display: 'flex',
                                     flexDirection: 'column',
@@ -161,7 +161,7 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                 {pkg.badgeText && (
                                     <div style={{
                                         alignSelf: 'flex-start',
-                                        color: '#3b82f6',
+                                        color: 'var(--color-primary)',
                                         fontWeight: '600',
                                         fontSize: '0.95rem',
                                         letterSpacing: '0.5px',
@@ -173,17 +173,17 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                 )}
 
                                 {/* Centered Name and Price */}
-                                <h3 style={{ fontSize: '1.8rem', color: '#3b82f6', margin: '0 0 10px 0', fontWeight: 'bold', textAlign: 'center' }}>
+                                <h3 style={{ fontSize: '1.8rem', color: 'var(--color-primary)', margin: '0 0 10px 0', fontWeight: 'bold', textAlign: 'center' }}>
                                     {pkg.name}
                                 </h3>
 
-                                <div style={{ fontSize: '2.8rem', color: '#3b82f6', fontWeight: 'bold', marginBottom: '25px', textAlign: 'center' }}>
+                                <div style={{ fontSize: '2.8rem', color: 'var(--color-primary)', fontWeight: 'bold', marginBottom: '25px', textAlign: 'center' }}>
                                     <span style={{ fontSize: '1.5rem', verticalAlign: 'middle', marginRight: '5px' }}>₹</span>
                                     {pkg.price?.replace('₹', '')}
                                 </div>
 
                                 {pkg.description && (
-                                    <p style={{ color: '#666', marginBottom: '30px', fontSize: '0.95rem', lineHeight: '1.5', textAlign: 'center' }}>
+                                    <p style={{ color: 'var(--color-text-secondary)', marginBottom: '30px', fontSize: '0.95rem', lineHeight: '1.5', textAlign: 'center' }}>
                                         {pkg.description}
                                     </p>
                                 )}
@@ -193,20 +193,20 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                     <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
                                         {pkg.features?.map((feature: string, fIdx: number) => (
                                             <li key={`inc-${fIdx}`} style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
-                                                <div style={{ minWidth: '24px', color: '#3b82f6', fontSize: '18px', marginTop: '2px', fontWeight: 'bold' }}>
+                                                <div style={{ minWidth: '24px', color: 'var(--color-primary)', fontSize: '18px', marginTop: '2px', fontWeight: 'bold' }}>
                                                     ✓
                                                 </div>
-                                                <span style={{ color: '#475569', fontSize: '1rem', lineHeight: '1.5' }}>{feature}</span>
+                                                <span style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', lineHeight: '1.5' }}>{feature}</span>
                                             </li>
                                         ))}
 
                                         {/* Unavailable Features (Cross marked and striked out) */}
                                         {pkg.unavailableFeatures?.map((feature: string, fIdx: number) => (
                                             <li key={`exc-${fIdx}`} style={{ display: 'flex', alignItems: 'flex-start', gap: '15px', opacity: 0.6 }}>
-                                                <div style={{ minWidth: '24px', color: '#3b82f6', fontSize: '18px', marginTop: '2px', fontWeight: 'bold' }}>
+                                                <div style={{ minWidth: '24px', color: 'var(--color-primary)', fontSize: '18px', marginTop: '2px', fontWeight: 'bold' }}>
                                                     ✕
                                                 </div>
-                                                <span style={{ color: '#475569', fontSize: '1rem', lineHeight: '1.5', textDecoration: 'line-through' }}>{feature}</span>
+                                                <span style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', lineHeight: '1.5', textDecoration: 'line-through' }}>{feature}</span>
                                             </li>
                                         ))}
                                     </ul>
@@ -215,7 +215,7 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                 <button style={{
                                     width: '100%',
                                     padding: '16px',
-                                    backgroundColor: '#3b82f6',
+                                    backgroundColor: 'var(--color-primary)',
                                     color: 'white',
                                     border: 'none',
                                     borderRadius: '8px',
@@ -225,8 +225,8 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                     marginTop: '40px',
                                     transition: 'background-color 0.2s',
                                 }}
-                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
-                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--color-primary-dark)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--color-primary)'}
                                     onClick={() => {
                                         const contactSection = document.getElementById('contact');
                                         if (contactSection) {
@@ -241,9 +241,9 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                             </div>
                         ))
                     ) : (
-                        <div style={{ textAlign: 'center', padding: '40px', width: '100%', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px dashed #3b82f6' }}>
-                            <h3 style={{ color: '#3b82f6', fontSize: '1.4rem', marginBottom: '10px' }}>No Packages Added Yet</h3>
-                            <p style={{ color: '#475569' }}>You haven't added any packages to this tab in Sanity Studio.</p>
+                        <div style={{ textAlign: 'center', padding: '40px', width: '100%', backgroundColor: '#ffffff', borderRadius: '16px', border: '1px dashed var(--color-primary)' }}>
+                            <h3 style={{ color: 'var(--color-primary)', fontSize: '1.4rem', marginBottom: '10px' }}>No Packages Added Yet</h3>
+                            <p style={{ color: 'var(--color-text-secondary)' }}>You haven't added any packages to this tab in Sanity Studio.</p>
                         </div>
                     )}
                 </div>
@@ -253,7 +253,7 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                     <h2 style={{ fontSize: '2.5rem', color: 'var(--color-primary)', marginBottom: '15px', fontWeight: '700', textAlign: 'center' }}>
                         Want To Customise Your Mentorship Plan?
                     </h2>
-                    <p style={{ fontSize: '1.1rem', color: '#475569', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
+                    <p style={{ fontSize: '1.1rem', color: 'var(--color-text-secondary)', maxWidth: '800px', margin: '0 auto', lineHeight: '1.6' }}>
                         If you want to subscribe to specific services from Mentoria that resolve your career challenges, you can choose one or more of the following:
                     </p>
                 </div>
@@ -272,7 +272,7 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                             <div style={{
                                 width: '120px',
                                 height: '120px',
-                                backgroundColor: '#f0f7ff',
+                                backgroundColor: 'var(--color-background-secondary)',
                                 borderRadius: '12px',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -283,12 +283,12 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                 {pkg.icon}
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <h3 style={{ fontSize: '1.2rem', color: '#3b82f6', margin: '0 0 8px 0', lineHeight: '1.3' }}>{pkg.title}</h3>
-                                <div style={{ fontSize: '1.1rem', color: '#3b82f6', fontWeight: '600', marginBottom: '12px' }}>{pkg.price}</div>
-                                <p style={{ color: '#666', fontSize: '0.9rem', lineHeight: '1.5', margin: '0 0 20px 0', flexGrow: 1 }}>{pkg.description}</p>
+                                <h3 style={{ fontSize: '1.2rem', color: 'var(--color-primary)', margin: '0 0 8px 0', lineHeight: '1.3' }}>{pkg.title}</h3>
+                                <div style={{ fontSize: '1.1rem', color: 'var(--color-primary)', fontWeight: '600', marginBottom: '12px' }}>{pkg.price}</div>
+                                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', lineHeight: '1.5', margin: '0 0 20px 0', flexGrow: 1 }}>{pkg.description}</p>
                                 <button style={{
                                     padding: '10px 24px',
-                                    backgroundColor: '#3b82f6',
+                                    backgroundColor: 'var(--color-primary)',
                                     color: 'white',
                                     border: 'none',
                                     borderRadius: '6px',

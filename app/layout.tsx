@@ -1,7 +1,6 @@
 ﻿import type { Metadata } from 'next'
 import React from 'react'
 
-export const revalidate = 0 // Disable caching to show changes immediately
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { getNavbar, getSiteConfig } from '@/lib/sanity'
@@ -39,15 +38,18 @@ export default async function RootLayout({
 
   // Define CSS variables from Sanity with sensible defaults
   const cssVars = {
-    '--color-primary': siteConfig?.primaryColor || '#2563eb', // Royal Blue
-    '--color-primary-hover': siteConfig?.primaryHoverColor || '#1d4ed8', // Deeper Blue
-    '--color-background': siteConfig?.backgroundColor || '#ffffff',
-    '--color-surface': siteConfig?.surfaceColor || '#f0f7ff', // Very light blue
-    '--color-text-primary': siteConfig?.textPrimary || '#333333',
-    '--color-text-secondary': siteConfig?.textSecondary || '#666666',
-    '--color-border': siteConfig?.borderColor || '#e0e0e0',
-    '--color-footer-background': siteConfig?.footerBackground || '#1a1a1a',
-    '--color-footer-text': siteConfig?.footerText || '#ffffff',
+    '--color-primary': siteConfig?.primaryColor || '#2563eb', // Vibrant Blue
+    '--color-primary-hover': siteConfig?.primaryHoverColor || '#1d4ed8', // Darker Blue
+    '--color-primary-dark': '#1e40af', // Deep Blue for hover states
+    '--color-background': siteConfig?.backgroundColor || '#ffffff', // White
+    '--color-background-secondary': '#f3f4f6', // Light Gray background
+    '--color-surface': siteConfig?.surfaceColor || '#111111', // Deep Black
+    '--color-text-primary': siteConfig?.textPrimary || '#000000', // Black
+    '--color-text-secondary': siteConfig?.textSecondary || '#4b5563', // Gray
+    '--color-text-on-dark': '#ffffff', // White text for dark backgrounds
+    '--color-border': siteConfig?.borderColor || '#e5e7eb', // Light Gray
+    '--color-footer-background': siteConfig?.footerBackground || '#010101', // Pure Black
+    '--color-footer-text': siteConfig?.footerText || '#ffffff', // White
   } as React.CSSProperties
 
   const allPages = await import('@/lib/sanity').then(m => m.getAllPages())

@@ -145,7 +145,6 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
             const standardSections = [
               { label: 'Home', href: '#home', priority: 1 },
               { label: 'About', href: '#about', priority: 2 },
-              { label: 'Services', href: '#services', priority: 3 },
               { label: 'Packages', href: '#packages', priority: 4 },
               { label: 'Testimonials', href: '#testimonials', priority: 5 },
               { label: 'Contact', href: '#contact', priority: 7 }
@@ -299,7 +298,6 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
             const standardSections = [
               { label: 'Home', href: '#home', priority: 1 },
               { label: 'About', href: '#about', priority: 2 },
-              { label: 'Services', href: '#services', priority: 3 },
               { label: 'Packages', href: '#packages', priority: 4 },
               { label: 'Testimonials', href: '#testimonials', priority: 5 },
               { label: 'Contact', href: '#contact', priority: 7 }

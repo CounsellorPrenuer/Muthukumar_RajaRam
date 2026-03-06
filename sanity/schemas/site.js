@@ -11,19 +11,19 @@ export default {
   type: 'document',
   // This makes it a singleton - only one document of this type can exist
   __experimental_actions: ['create', 'update', /*'delete'*/],
-  
+
   fieldsets: [
     {
       name: 'themeColors',
       title: 'Theme Colors',
-      options: { 
-        collapsible: true, 
-        collapsed: false 
+      options: {
+        collapsible: true,
+        collapsed: false
       },
       description: 'Customize the color scheme of your website'
     }
   ],
-  
+
   fields: [
     {
       name: 'title',
@@ -67,7 +67,7 @@ export default {
       title: 'Primary Color',
       type: 'string',
       description: 'Primary brand color for buttons and links',
-      initialValue: '#667eea',
+      initialValue: '#2563eb',
       validation: (Rule) => Rule.regex(/^#[0-9A-F]{6}$/i).warning('Use hex format: #RRGGBB'),
       fieldset: 'themeColors'
     },
@@ -76,7 +76,7 @@ export default {
       title: 'Primary Hover Color',
       type: 'string',
       description: 'Color when hovering over primary buttons/links',
-      initialValue: '#5568d3',
+      initialValue: '#1d4ed8',
       validation: (Rule) => Rule.regex(/^#[0-9A-F]{6}$/i).warning('Use hex format: #RRGGBB'),
       fieldset: 'themeColors'
     },
@@ -103,7 +103,7 @@ export default {
       title: 'Primary Text Color',
       type: 'string',
       description: 'Main text color for headings',
-      initialValue: '#333333',
+      initialValue: '#000000',
       validation: (Rule) => Rule.regex(/^#[0-9A-F]{6}$/i).warning('Use hex format: #RRGGBB'),
       fieldset: 'themeColors'
     },
@@ -112,7 +112,7 @@ export default {
       title: 'Secondary Text Color',
       type: 'string',
       description: 'Secondary text color for body copy',
-      initialValue: '#666666',
+      initialValue: '#4b5563',
       validation: (Rule) => Rule.regex(/^#[0-9A-F]{6}$/i).warning('Use hex format: #RRGGBB'),
       fieldset: 'themeColors'
     },
@@ -130,7 +130,7 @@ export default {
       title: 'Footer Background Color',
       type: 'string',
       description: 'Background color for footer',
-      initialValue: '#1a1a1a',
+      initialValue: '#010101',
       validation: (Rule) => Rule.regex(/^#[0-9A-F]{6}$/i).warning('Use hex format: #RRGGBB'),
       fieldset: 'themeColors'
     },

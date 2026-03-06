@@ -3,9 +3,8 @@
 import { SectionProps } from '@/lib/sections/registry'
 
 export function ServiceSection({ title, description, services, id }: SectionProps) {
-  const primaryBlue = '#2563eb'
-  const cardShadow = '0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 5px 15px -5px rgba(0, 0, 0, 0.03)'
-  const popularColor = '#10b981' // Green for popular badge
+  const cardShadow = '0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
+  const popularColor = '#2563eb'
 
   return (
     <section
@@ -13,7 +12,8 @@ export function ServiceSection({ title, description, services, id }: SectionProp
       className="service-section"
       style={{
         padding: '100px 20px',
-        backgroundColor: '#ffffff',
+        backgroundColor: 'var(--color-surface)',
+        color: 'var(--color-text-on-dark)'
       }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -55,9 +55,9 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                 key={idx}
                 style={{
                   padding: '40px 30px',
-                  backgroundColor: '#ffffff',
+                  backgroundColor: '#1a1a1a',
                   borderRadius: '24px',
-                  border: `1.5px solid ${service.popular ? primaryBlue : '#e2e8f0'}`,
+                  border: `1.5px solid ${service.popular ? 'var(--color-primary)' : '#333333'}`,
                   boxShadow: cardShadow,
                   position: 'relative',
                   display: 'flex',
@@ -90,7 +90,7 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                   <h3 style={{
                     fontSize: '1.6rem',
                     marginBottom: '16px',
-                    color: primaryBlue,
+                    color: 'var(--color-primary)',
                     fontWeight: '700',
                     lineHeight: '1.2'
                   }}>
@@ -100,7 +100,7 @@ export function ServiceSection({ title, description, services, id }: SectionProp
 
                 {service.serviceDescription && (
                   <p style={{
-                    color: 'var(--color-text-secondary)',
+                    color: 'rgba(255, 255, 255, 0.7)',
                     lineHeight: '1.6',
                     fontSize: '0.95rem',
                     marginBottom: '24px'
@@ -112,7 +112,7 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                 {service.price && (
                   <div style={{
                     fontSize: '2.5rem',
-                    color: primaryBlue,
+                    color: 'var(--color-primary)',
                     fontWeight: '800',
                     marginBottom: '32px'
                   }}>
@@ -126,12 +126,12 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                       {service.features.map((feature: string, fIdx: number) => (
                         <li key={fIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                           <span style={{
-                            color: '#10b981',
+                            color: 'var(--color-primary)',
                             fontSize: '1.1rem',
                             fontWeight: 'bold',
                             marginTop: '2px'
                           }}>✓</span>
-                          <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem' }}>{feature}</span>
+                          <span style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.95rem' }}>{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -142,7 +142,7 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                   style={{
                     marginTop: '40px',
                     padding: '16px',
-                    backgroundColor: primaryBlue,
+                    backgroundColor: 'var(--color-primary)',
                     color: 'white',
                     border: 'none',
                     borderRadius: '50px',

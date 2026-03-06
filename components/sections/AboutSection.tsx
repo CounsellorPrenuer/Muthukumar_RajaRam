@@ -9,15 +9,12 @@ export function AboutSection({ title, subtitle, description, quote, image, id, h
   const altText = image?.alt || title || 'About section image'
   const validHighlights = Array.isArray(highlights) ? highlights.filter((item: any) => item?.text || item?.icon) : []
 
-  // Color palette based on the image - Transitions to Blue
-  const primaryBlue = '#1e40af' // Deep royal blue for headings
-  const accentBlue = '#06b6d4' // Cyan/Bright blue for quotes/accents
   const cardShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
   const imageShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
 
   // Highlight icon background colors
-  const iconBgs = ['#f0fdf4', '#f0f9ff', '#fffbeb', '#f0fdfa']
-  const iconColors = ['#22c55e', '#0ea5e9', '#f59e0b', '#10b981']
+  const iconBgs = ['#f3f4f6', '#f3f4f6', '#f3f4f6', '#f3f4f6']
+  const iconColors = ['var(--color-primary)', 'var(--color-primary)', 'var(--color-primary)', 'var(--color-primary)']
 
   return (
     <section
@@ -25,7 +22,7 @@ export function AboutSection({ title, subtitle, description, quote, image, id, h
       className="about-section"
       style={{
         padding: '100px 20px',
-        backgroundColor: '#eff6ff', // Very light blue background
+        backgroundColor: 'var(--color-background)',
         minHeight: '80vh',
         display: 'flex',
         alignItems: 'center'
@@ -79,11 +76,11 @@ export function AboutSection({ title, subtitle, description, quote, image, id, h
           {quote && (
             <div
               style={{
-                borderLeft: `4px solid ${primaryBlue}`,
+                borderLeft: `4px solid var(--color-primary)`,
                 paddingLeft: '24px',
                 marginBottom: '40px',
                 fontStyle: 'italic',
-                color: accentBlue,
+                color: 'var(--color-primary)',
                 fontSize: '1.15rem',
                 fontWeight: '500',
                 lineHeight: '1.6'
@@ -99,7 +96,7 @@ export function AboutSection({ title, subtitle, description, quote, image, id, h
                 <h3 style={{
                   fontSize: '1.4rem',
                   marginBottom: '20px',
-                  color: primaryBlue,
+                  color: 'var(--color-primary)',
                   fontWeight: '600'
                 }}>
                   {subtitle}
