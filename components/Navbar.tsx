@@ -159,7 +159,7 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               { label: 'About', href: '#about', priority: 2 },
               { label: 'Programs', href: '#programs', priority: 3 },
               { label: 'Packages', href: '#packages', priority: 4 },
-              { label: 'Contact', href: '#contact', priority: 5 }
+              { label: 'Contact', href: '#contact', priority: 100 }
             ];
 
             standardSections.forEach(section => {
@@ -181,8 +181,8 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
                 const bLabel = (b.label || '').toLowerCase().trim();
                 const aDefault = standardSections.find(s => s.label.toLowerCase() === aLabel);
                 const bDefault = standardSections.find(s => s.label.toLowerCase() === bLabel);
-                const aPriority = aDefault ? aDefault.priority : 99;
-                const bPriority = bDefault ? bDefault.priority : 99;
+                const aPriority = aDefault ? aDefault.priority : 50;
+                const bPriority = bDefault ? bDefault.priority : 50;
                 return aPriority - bPriority;
               });
 
@@ -322,7 +322,7 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               { label: 'About', href: '#about', priority: 2 },
               { label: 'Programs', href: '#programs', priority: 3 },
               { label: 'Packages', href: '#packages', priority: 4 },
-              { label: 'Contact', href: '#contact', priority: 5 }
+              { label: 'Contact', href: '#contact', priority: 100 }
             ];
 
             standardSections.forEach(section => {
@@ -343,8 +343,8 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               const bLabel = (b.label || '').toLowerCase().trim();
               const aDefault = standardSections.find(s => s.label.toLowerCase() === aLabel);
               const bDefault = standardSections.find(s => s.label.toLowerCase() === bLabel);
-              const aPriority = aDefault ? aDefault.priority : 99;
-              const bPriority = bDefault ? bDefault.priority : 99;
+              const aPriority = aDefault ? aDefault.priority : 50;
+              const bPriority = bDefault ? bDefault.priority : 50;
               return aPriority - bPriority;
             });
 

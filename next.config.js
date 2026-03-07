@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/Muthukumar_RajaRam',
-  distDir: 'build_output',
   reactStrictMode: true,
   images: {
     unoptimized: true,
