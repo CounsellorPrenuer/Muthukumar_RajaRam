@@ -297,8 +297,8 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                     alignSelf: 'flex-start',
                                     fontSize: '0.95rem'
                                 }}
-                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
-                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#3b82f6'}
+                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--color-primary-dark)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'var(--color-primary)'}
                                     onClick={() => {
                                         const contactSection = document.getElementById('contact');
                                         if (contactSection) {

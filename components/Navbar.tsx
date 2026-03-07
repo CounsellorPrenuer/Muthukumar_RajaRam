@@ -88,6 +88,7 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          position: 'relative',
         }}
       >
         {/* Logo */}
@@ -95,45 +96,57 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
           href="/"
           onClick={(e) => handleLinkClick(e, '#home')}
           style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            color: 'var(--color-text-primary)',
+            zIndex: 1001,
             display: 'flex',
             alignItems: 'center',
-            textDecoration: 'none',
-            zIndex: 1001,
           }}
         >
           {logoImageUrl ? (
             <Image
               src={logoImageUrl}
               alt={logoAlt}
-              width={400}
-              height={120}
+              width={180}
+              height={52}
               style={{
-                height: isScrolled ? '38px' : '48px',
+                height: isScrolled ? '42px' : '52px',
                 width: 'auto',
-                maxWidth: '240px',
-                objectFit: 'contain',
                 transition: 'height 0.3s ease',
               }}
               priority
             />
           ) : (
-            logo || 'Logo'
+            <Image
+              src="/logo.svg"
+              alt="CareerIPA Logo"
+              width={52}
+              height={52}
+              style={{
+                height: isScrolled ? '42px' : '52px',
+                width: 'auto',
+                transition: 'height 0.3s ease',
+              }}
+              priority
+            />
           )}
         </a>
 
-        {/* Desktop Navigation Links */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
+        {/* Desktop Navigation Links - CENTERED */}
+        <div
+          className="desktop-menu"
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
           {(() => {
-            // Combine manual links with dynamic pages
             const manualLinks = links || [];
             const pageLinks = dynamicPages
               .filter(p => p.slug && typeof p.slug === 'string')
               .map(p => ({ label: p.title, href: `/${p.slug}` }));
 
-            // Merge and remove duplicates by label
             const combined = [...manualLinks];
             pageLinks.forEach(pl => {
               if (pl.label && !combined.some(cl => cl.label && cl.label.toLowerCase() === pl.label.toLowerCase())) {
@@ -141,39 +154,39 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               }
             });
 
-            // Standard sections to ensure are present (as anchors by default)
             const standardSections = [
               { label: 'Home', href: '#home', priority: 1 },
               { label: 'About', href: '#about', priority: 2 },
+              { label: 'Programs', href: '#programs', priority: 3 },
               { label: 'Packages', href: '#packages', priority: 4 },
-              { label: 'Testimonials', href: '#testimonials', priority: 5 },
-              { label: 'Contact', href: '#contact', priority: 7 }
+              { label: 'Contact', href: '#contact', priority: 5 }
             ];
 
-            // Ensure essential links exist
             standardSections.forEach(section => {
               if (!combined.some(l => l.label && l.label.toLowerCase() === section.label.toLowerCase())) {
                 combined.push({ label: section.label, href: section.href });
               }
             });
 
-            // Sort combining manual order if possible, but keeping essential ones accessible
-            // For simplicity, we'll just ensure Home is first if it was added
-            const finalLinks = combined.sort((a, b) => {
-              const aDefault = standardSections.find(s => s.label.toLowerCase() === a.label?.toLowerCase());
-              const bDefault = standardSections.find(s => s.label.toLowerCase() === b.label?.toLowerCase());
-              if (aDefault && bDefault) return aDefault.priority - bDefault.priority;
-              if (aDefault) return -1;
-              if (bDefault) return 1;
-              return 0;
+            // Explicitly filter out Blog and Dashboard
+            const filteredCombined = combined.filter(link => {
+              const label = (link.label || '').toLowerCase().trim();
+              const href = (link.href || '').toLowerCase();
+              return label !== 'blog' && label !== 'dashboard' && !href.includes('/blog') && !href.includes('/dashboard');
             });
+
+            const finalLinks = filteredCombined
+              .sort((a, b) => {
+                const aDefault = standardSections.find(s => s.label.toLowerCase() === a.label?.toLowerCase());
+                const bDefault = standardSections.find(s => s.label.toLowerCase() === b.label?.toLowerCase());
+                return (aDefault?.priority || 0) - (bDefault?.priority || 0);
+              });
 
             return (
               <ul
-                className="desktop-menu"
                 style={{
                   display: 'flex',
-                  gap: '30px',
+                  gap: '35px',
                   listStyle: 'none',
                   margin: 0,
                   padding: 0,
@@ -192,12 +205,13 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
                   const isPackages = labelLower === 'packages'
                   const isTestimonials = labelLower === 'testimonials'
                   const isFAQ = labelLower === 'faq'
+                  const isPrograms = labelLower === 'programs'
 
-                  // Smart Linking: Fallback to anchor if page doesn't exist
                   const pageSlugExists = (slug: string) => dynamicPages.some(p => p.slug?.toLowerCase() === slug.toLowerCase())
 
                   let href = link.href
                   if (isHome) href = '#home'
+                  else if (isPrograms && !pageSlugExists('programs')) href = '#programs'
                   else if (isServices && !pageSlugExists('services')) href = '#services'
                   else if (isAbout && !pageSlugExists('about')) href = '#about'
                   else if (isPackages && !pageSlugExists('packages')) href = '#packages'
@@ -212,7 +226,7 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
                         href={href}
                         onClick={(e) => handleLinkClick(e, href)}
                         style={{
-                          color: 'var(--color-text-primary)',
+                          color: '#1e3a8a', // Blue text from image
                           textDecoration: 'none',
                           fontSize: '0.95rem',
                           fontWeight: 500,
@@ -224,7 +238,7 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
                           e.currentTarget.style.opacity = '1'
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.color = 'var(--color-text-primary)'
+                          e.currentTarget.style.color = '#1e3a8a'
                           e.currentTarget.style.opacity = '0.9'
                         }}
                       >
@@ -236,6 +250,10 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               </ul>
             );
           })()}
+        </div>
+
+        {/* Buttons on the Right */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} className="desktop-menu">
 
           {/* Mobile Menu Toggle */}
           <button
@@ -247,7 +265,7 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               cursor: 'pointer',
               padding: '8px',
               zIndex: 1001,
-              color: 'var(--color-text-primary)',
+              color: 'var(--color-text-primary',
             }}
             className="mobile-toggle"
           >
@@ -298,9 +316,9 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
             const standardSections = [
               { label: 'Home', href: '#home', priority: 1 },
               { label: 'About', href: '#about', priority: 2 },
+              { label: 'Programs', href: '#programs', priority: 3 },
               { label: 'Packages', href: '#packages', priority: 4 },
-              { label: 'Testimonials', href: '#testimonials', priority: 5 },
-              { label: 'Contact', href: '#contact', priority: 7 }
+              { label: 'Contact', href: '#contact', priority: 5 }
             ];
 
             standardSections.forEach(section => {
@@ -309,7 +327,14 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               }
             });
 
-            const finalLinks = combined.sort((a, b) => {
+            // Explicitly filter out Blog and Dashboard
+            const filteredCombined = combined.filter(link => {
+              const label = (link.label || '').toLowerCase().trim();
+              const href = (link.href || '').toLowerCase();
+              return label !== 'blog' && label !== 'dashboard' && !href.includes('/blog') && !href.includes('/dashboard');
+            });
+
+            const finalLinks = filteredCombined.sort((a, b) => {
               const aDefault = standardSections.find(s => s.label.toLowerCase() === a.label?.toLowerCase());
               const bDefault = standardSections.find(s => s.label.toLowerCase() === b.label?.toLowerCase());
               if (aDefault && bDefault) return aDefault.priority - bDefault.priority;

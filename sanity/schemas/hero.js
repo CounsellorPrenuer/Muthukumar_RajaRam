@@ -8,7 +8,7 @@ export default {
   name: 'hero',
   title: 'Hero Section',
   type: 'document',
-  
+
   fields: [
     {
       name: 'tagline',
@@ -41,6 +41,21 @@ export default {
       type: 'string',
       description: 'Where the CTA button links to (e.g., "#contact", "https://example.com")',
       initialValue: '#contact'
+    },
+    {
+      name: 'backgroundImage',
+      title: 'Hero Image / Background Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
+        }
+      ]
     },
     {
       name: 'backgroundGradient',

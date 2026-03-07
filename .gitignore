@@ -19,7 +19,27 @@ yarn.lock
 
 # Sanity - exclude from git
 sanity/
+sanity.config.ts
+sanity.cli.ts
 sanity-schemas-oversimplify/
+*.json
+!package.json
+!tsconfig.json
+!next.config.js
+
+# Temporary/Log files
+*_log.txt
+website.html
+recent.json
+home.json
+legacy.json
+site.json
+sanity-config.json
+*.mjs
+*.js
+!next.config.js
+!postcss.config.js
+!tailwind.config.js
 
 # Oversimplified versions
 app-oversimplify/

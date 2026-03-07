@@ -6,9 +6,11 @@ import { Navbar } from '@/components/Navbar'
 import { getNavbar, getSiteConfig } from '@/lib/sanity'
 
 export const metadata: Metadata = {
-  title: 'Remixable Template',
-  description: 'A reusable section-based website template powered by Sanity CMS',
+  title: 'CareerIPA - Scientific Career Clarity',
+  description: 'Career Assessment based on Interest, Personality and Ability for Students & Professionals',
 }
+
+export const revalidate = 0 // Disable Next.js cache so Sanity data is always fresh
 
 export default async function RootLayout({
   children,
@@ -38,17 +40,17 @@ export default async function RootLayout({
 
   // Define CSS variables from Sanity with sensible defaults
   const cssVars = {
-    '--color-primary': siteConfig?.primaryColor || '#2563eb', // Vibrant Blue
-    '--color-primary-hover': siteConfig?.primaryHoverColor || '#1d4ed8', // Darker Blue
-    '--color-primary-dark': '#1e40af', // Deep Blue for hover states
-    '--color-background': siteConfig?.backgroundColor || '#ffffff', // White
-    '--color-background-secondary': '#f3f4f6', // Light Gray background
-    '--color-surface': siteConfig?.surfaceColor || '#111111', // Deep Black
-    '--color-text-primary': siteConfig?.textPrimary || '#000000', // Black
-    '--color-text-secondary': siteConfig?.textSecondary || '#4b5563', // Gray
+    '--color-primary': siteConfig?.primaryColor || '#0284c7', // Cold Sky Blue
+    '--color-primary-hover': siteConfig?.primaryHoverColor || '#0369a1', // Darker Cold Blue
+    '--color-primary-dark': '#0c4a6e', // Navy for hover states
+    '--color-background': siteConfig?.backgroundColor || '#f8fafc', // Ice White
+    '--color-background-secondary': '#f1f5f9', // Very Light Cool Gray
+    '--color-surface': siteConfig?.surfaceColor || '#ffffff', // Clean White Cards
+    '--color-text-primary': siteConfig?.textPrimary || '#0f172a', // Slate 900
+    '--color-text-secondary': siteConfig?.textSecondary || '#475569', // Slate 600
     '--color-text-on-dark': '#ffffff', // White text for dark backgrounds
-    '--color-border': siteConfig?.borderColor || '#e5e7eb', // Light Gray
-    '--color-footer-background': siteConfig?.footerBackground || '#010101', // Pure Black
+    '--color-border': siteConfig?.borderColor || '#cbd5e1', // Light Steel Border
+    '--color-footer-background': siteConfig?.footerBackground || '#0f172a', // Deep Slate
     '--color-footer-text': siteConfig?.footerText || '#ffffff', // White
   } as React.CSSProperties
 

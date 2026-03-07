@@ -45,6 +45,9 @@
   ],
   "exclude": [
     "node_modules",
-    "sanity/**"
+    "sanity",
+    "sanity.config.ts",
+    "sanity.cli.ts",
+    "scripts"
   ]
 }

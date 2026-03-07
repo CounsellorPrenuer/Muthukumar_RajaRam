@@ -12,10 +12,10 @@ import { schemaTypes } from './schemaTypes'
 export default defineConfig({
   name: 'default',
   title: 'Professional Website CMS',
-  
-  projectId: 'qdidf6e5',  // Get from sanity.io/manage
+
+  projectId: '694hecf9',  // Get from sanity.io/manage
   dataset: 'production',
-  
+
   plugins: [
     structureTool(),
   ],

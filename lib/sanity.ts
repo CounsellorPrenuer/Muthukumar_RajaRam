@@ -116,6 +116,13 @@ export async function getSiteConfig() {
         },
         alt
       },
+      heroImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
       primaryColor,
       primaryHoverColor,
       backgroundColor,

@@ -9,6 +9,7 @@ function buildLegacySections(legacyContent: any) {
       _type: 'heroSection',
       heading: legacyContent.hero.headline,
       subheading: legacyContent.hero.subheadline,
+      backgroundImage: legacyContent.hero.backgroundImage,
       cta: {
         text: legacyContent.hero.ctaText,
         link: legacyContent.hero.ctaLink,
@@ -54,6 +55,12 @@ function buildLegacySections(legacyContent: any) {
       categories: legacyContent.mentoriaPackages.categories || [],
     })
   }
+
+  sections.push({
+    _key: 'career-ipa-programs',
+    _type: 'programsByUserTypeSection',
+    title: 'Programs by User Type',
+  })
 
 
   const mappedTestimonials = legacyContent?.testimonials?.length
@@ -113,30 +120,29 @@ function buildLegacySections(legacyContent: any) {
  * Root page / home
  * Shows welcome page or home content
  */
+export const revalidate = 0 // Disable Next.js cache so Sanity data is always fresh
+
 export default async function Home() {
   let homePage = null
   let legacyHomeContent = null
+  let siteConfig = null
   const sanityStudioUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : '/studio'
 
   try {
-    // Add 5-second timeout for Sanity fetch
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Timeout')), 5000)
     )
-    homePage = await Promise.race([getPageBySlug('home'), timeoutPromise])
+    // Fetch home page, site config, and legacy home content in parallel
+    const [pageRes, siteRes, legacyRes] = await Promise.all([
+      Promise.race([getPageBySlug('home'), timeoutPromise]),
+      Promise.race([import('@/lib/sanity').then(m => m.getSiteConfig()), timeoutPromise]),
+      Promise.race([getLegacyHomeContent(), timeoutPromise])
+    ])
+    homePage = pageRes
+    siteConfig = siteRes
+    legacyHomeContent = legacyRes
   } catch (error) {
-    console.log('[Home] Failed to fetch home page, using fallback', error)
-  }
-
-  if (!homePage) {
-    try {
-      const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Timeout')), 5000)
-      )
-      legacyHomeContent = await Promise.race([getLegacyHomeContent(), timeoutPromise])
-    } catch (error) {
-      console.log('[Home] Failed to fetch legacy home content, using fallback', error)
-    }
+    console.log('[Home] Failed to fetch data, using fallback', error)
   }
 
   const legacySections = legacyHomeContent ? buildLegacySections(legacyHomeContent) : []
@@ -145,7 +151,18 @@ export default async function Home() {
   // If home page exists in Sanity with sections, render it. If not, fallback to legacy content.
   if (pageSections.length > 0 || legacySections.length > 0) {
     const { getSectionComponent } = await import('@/lib/sections/registry')
-    const allSections = pageSections.length > 0 ? pageSections : legacySections
+
+    // Start with the sections directly specified in the Sanity Page document
+    const allSections = [...pageSections]
+
+    // If the Sanity page doesn't have all sections yet, fall back to the legacy sections.
+    // This allows the user to migrate sections to the Sanity Page one at a time without breaking the site.
+    legacySections.forEach((legacySection: any) => {
+      const existsInSanityData = allSections.some(s => s._type === legacySection._type)
+      if (!existsInSanityData) {
+        allSections.push(legacySection)
+      }
+    })
     const footerSection = allSections.find((s: any) => s._type === 'footerSection')
     const regularSections = allSections.filter((s: any) => s._type !== 'footerSection')
 
@@ -155,7 +172,13 @@ export default async function Home() {
           regularSections.map((section: any, idx: number) => {
             const Component = getSectionComponent(section._type)
             if (!Component) return null
-            return <Component key={section._key || idx} {...section} />
+            return (
+              <Component
+                key={section._key || idx}
+                {...section}
+                globalHeroImage={siteConfig?.heroImage}
+              />
+            )
           })
         ) : null}
         {footerSection && (() => {

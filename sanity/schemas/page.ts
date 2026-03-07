@@ -35,6 +35,7 @@ export const page = defineType({
         { type: 'faqSection' },
         { type: 'ctaSection' },
         { type: 'mentoriaPackagesSection' },
+        { type: 'programsByUserTypeSection' },
       ],
       options: {
         layout: 'list',

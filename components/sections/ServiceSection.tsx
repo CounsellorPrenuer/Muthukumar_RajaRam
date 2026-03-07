@@ -3,8 +3,8 @@
 import { SectionProps } from '@/lib/sections/registry'
 
 export function ServiceSection({ title, description, services, id }: SectionProps) {
-  const cardShadow = '0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 5px 15px -5px rgba(0, 0, 0, 0.2)'
-  const popularColor = '#2563eb'
+  const cardShadow = '0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 5px 15px -5px rgba(0, 0, 0, 0.02)'
+  const popularColor = 'var(--color-primary)'
 
   return (
     <section
@@ -12,8 +12,8 @@ export function ServiceSection({ title, description, services, id }: SectionProp
       className="service-section"
       style={{
         padding: '100px 20px',
-        backgroundColor: 'var(--color-surface)',
-        color: 'var(--color-text-on-dark)'
+        backgroundColor: 'var(--color-background)',
+        color: 'var(--color-text-primary)'
       }}
     >
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -55,15 +55,17 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                 key={idx}
                 style={{
                   padding: '40px 30px',
-                  backgroundColor: '#1a1a1a',
+                  backgroundColor: 'var(--color-surface)',
                   borderRadius: '24px',
-                  border: `1.5px solid ${service.popular ? 'var(--color-primary)' : '#333333'}`,
+                  border: `1.5px solid ${service.popular ? 'var(--color-primary)' : 'var(--color-border)'}`,
                   boxShadow: cardShadow,
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
                   transition: 'transform 0.3s ease',
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-10px)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
               >
                 {service.popular && (
                   <div style={{
@@ -100,7 +102,7 @@ export function ServiceSection({ title, description, services, id }: SectionProp
 
                 {service.serviceDescription && (
                   <p style={{
-                    color: 'rgba(255, 255, 255, 0.7)',
+                    color: 'var(--color-text-secondary)',
                     lineHeight: '1.6',
                     fontSize: '0.95rem',
                     marginBottom: '24px'
@@ -131,7 +133,7 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                             fontWeight: 'bold',
                             marginTop: '2px'
                           }}>✓</span>
-                          <span style={{ color: 'rgba(255, 255, 255, 0.8)', fontSize: '0.95rem' }}>{feature}</span>
+                          <span style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem' }}>{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -149,10 +151,10 @@ export function ServiceSection({ title, description, services, id }: SectionProp
                     fontSize: '1.1rem',
                     fontWeight: '700',
                     cursor: 'pointer',
-                    transition: 'opacity 0.2s',
+                    transition: 'all 0.2s',
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-                  onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-primary-dark)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-primary)')}
                   onClick={() => {
                     const contactSection = document.getElementById('contact');
                     if (contactSection) {

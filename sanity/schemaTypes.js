@@ -30,6 +30,7 @@ import { mentoriaPackagesSection } from './schemas/mentoriaPackagesSection'
 import mentoriaPackages from './schemas/mentoriaPackages'
 import mentoriaPackageItem from './schemas/mentoriaPackageItem'
 import mentoriaPackageCategory from './schemas/mentoriaPackageCategory'
+import { programsByUserTypeSection } from './schemas/programsByUserTypeSection'
 
 export const schemaTypes = [
   // Top-level documents
@@ -62,4 +63,5 @@ export const schemaTypes = [
   faqSection,
   ctaSection,
   mentoriaPackagesSection,
+  programsByUserTypeSection,
 ]

@@ -7,7 +7,7 @@
 
 export default {
   name: 'site',
-  title: 'Site Configuration',
+  title: 'CareerIPA - Site Settings',
   type: 'document',
   // This makes it a singleton - only one document of this type can exist
   __experimental_actions: ['create', 'update', /*'delete'*/],
@@ -58,6 +58,22 @@ export default {
           type: 'string',
           title: 'Alt Text',
           description: 'Describe your logo for accessibility',
+        },
+      ],
+    },
+    {
+      name: 'heroImage',
+      title: 'Hero / Banner Photo',
+      type: 'image',
+      description: 'The large photo shown on the right side of the main Home page banner.',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
         },
       ],
     },
