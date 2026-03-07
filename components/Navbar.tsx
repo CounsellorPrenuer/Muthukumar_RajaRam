@@ -177,8 +177,10 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
 
             const finalLinks = filteredCombined
               .sort((a, b) => {
-                const aDefault = standardSections.find(s => s.label.toLowerCase() === a.label?.toLowerCase());
-                const bDefault = standardSections.find(s => s.label.toLowerCase() === b.label?.toLowerCase());
+                const aLabel = (a.label || '').toLowerCase().trim();
+                const bLabel = (b.label || '').toLowerCase().trim();
+                const aDefault = standardSections.find(s => s.label.toLowerCase() === aLabel);
+                const bDefault = standardSections.find(s => s.label.toLowerCase() === bLabel);
                 const aPriority = aDefault ? aDefault.priority : 99;
                 const bPriority = bDefault ? bDefault.priority : 99;
                 return aPriority - bPriority;
@@ -337,8 +339,10 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
             });
 
             const finalLinks = filteredCombined.sort((a, b) => {
-              const aDefault = standardSections.find(s => s.label.toLowerCase() === a.label?.toLowerCase());
-              const bDefault = standardSections.find(s => s.label.toLowerCase() === b.label?.toLowerCase());
+              const aLabel = (a.label || '').toLowerCase().trim();
+              const bLabel = (b.label || '').toLowerCase().trim();
+              const aDefault = standardSections.find(s => s.label.toLowerCase() === aLabel);
+              const bDefault = standardSections.find(s => s.label.toLowerCase() === bLabel);
               const aPriority = aDefault ? aDefault.priority : 99;
               const bPriority = bDefault ? bDefault.priority : 99;
               return aPriority - bPriority;
