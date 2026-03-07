@@ -120,7 +120,7 @@ function buildLegacySections(legacyContent: any) {
  * Root page / home
  * Shows welcome page or home content
  */
-export const revalidate = 0 // Disable Next.js cache so Sanity data is always fresh
+export const dynamic = 'force-static'
 
 export default async function Home() {
   let homePage = null
@@ -129,14 +129,11 @@ export default async function Home() {
   const sanityStudioUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : '/studio'
 
   try {
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Timeout')), 5000)
-    )
     // Fetch home page, site config, and legacy home content in parallel
     const [pageRes, siteRes, legacyRes] = await Promise.all([
-      Promise.race([getPageBySlug('home'), timeoutPromise]),
-      Promise.race([import('@/lib/sanity').then(m => m.getSiteConfig()), timeoutPromise]),
-      Promise.race([getLegacyHomeContent(), timeoutPromise])
+      getPageBySlug('home'),
+      import('@/lib/sanity').then(m => m.getSiteConfig()),
+      getLegacyHomeContent()
     ])
     homePage = pageRes
     siteConfig = siteRes
@@ -181,12 +178,13 @@ export default async function Home() {
             )
           })
         ) : null}
-        {footerSection && (() => {
-          const { getSectionComponent } = require('@/lib/sections/registry')
-          const FooterComponent = getSectionComponent(footerSection._type)
-          if (FooterComponent) return <FooterComponent key={footerSection._key || 'footer'} {...footerSection} />
-          return null
-        })()}
+        {footerSection ? (
+          (() => {
+            const FooterComponent = getSectionComponent(footerSection._type)
+            if (FooterComponent) return <FooterComponent key={footerSection._key || 'footer'} {...footerSection} />
+            return null
+          })()
+        ) : null}
       </main>
     )
   }

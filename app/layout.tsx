@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   description: 'Career Assessment based on Interest, Personality and Ability for Students & Professionals',
 }
 
-export const revalidate = 0 // Disable Next.js cache so Sanity data is always fresh
+// Static export configuration
+export const dynamic = 'force-static'
 
 export default async function RootLayout({
   children,
@@ -21,19 +22,12 @@ export default async function RootLayout({
   let siteConfig = null
 
   try {
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Timeout')), 3000)
-    )
-    navbar = await Promise.race([getNavbar(), timeoutPromise])
+    navbar = await getNavbar()
   } catch (error) {
     console.log('[Layout] Navbar fetch failed, using defaults')
   }
-
   try {
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Timeout')), 3000)
-    )
-    siteConfig = await Promise.race([getSiteConfig(), timeoutPromise])
+    siteConfig = await getSiteConfig()
   } catch (error) {
     console.log('[Layout] SiteConfig fetch failed, using defaults')
   }

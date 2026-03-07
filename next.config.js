@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  basePath: '/Muthukumar_RajaRam',
+  trailingSlash: true,
   reactStrictMode: true,
   images: {
     unoptimized: true,

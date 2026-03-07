@@ -16,11 +16,7 @@ export default async function Page({ params }: { params: PageParams }) {
   let page = null
 
   try {
-    // Add 5-second timeout for Sanity fetch
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Timeout')), 5000)
-    )
-    page = await Promise.race([getPageBySlug(params.slug), timeoutPromise])
+    page = await getPageBySlug(params.slug)
   } catch (error) {
     console.log(`[Page ${params.slug}] Fetch failed:`, error)
   }
@@ -90,12 +86,9 @@ export default async function Page({ params }: { params: PageParams }) {
 
 export async function generateStaticParams() {
   try {
-    const [pages, navbar] = await Promise.race([
-      Promise.all([
-        getAllPageSlugs(),
-        import('@/lib/sanity').then(m => m.getNavbar())
-      ]),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+    const [pages, navbar] = await Promise.all([
+      getAllPageSlugs(),
+      import('@/lib/sanity').then(m => m.getNavbar())
     ]) as [any[], any]
 
     const pageSlugs = pages.map((page: any) => page.slug)
