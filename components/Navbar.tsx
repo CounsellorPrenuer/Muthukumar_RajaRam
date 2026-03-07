@@ -179,7 +179,9 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               .sort((a, b) => {
                 const aDefault = standardSections.find(s => s.label.toLowerCase() === a.label?.toLowerCase());
                 const bDefault = standardSections.find(s => s.label.toLowerCase() === b.label?.toLowerCase());
-                return (aDefault?.priority || 0) - (bDefault?.priority || 0);
+                const aPriority = aDefault ? aDefault.priority : 99;
+                const bPriority = bDefault ? bDefault.priority : 99;
+                return aPriority - bPriority;
               });
 
             return (
@@ -337,10 +339,9 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
             const finalLinks = filteredCombined.sort((a, b) => {
               const aDefault = standardSections.find(s => s.label.toLowerCase() === a.label?.toLowerCase());
               const bDefault = standardSections.find(s => s.label.toLowerCase() === b.label?.toLowerCase());
-              if (aDefault && bDefault) return aDefault.priority - bDefault.priority;
-              if (aDefault) return -1;
-              if (bDefault) return 1;
-              return 0;
+              const aPriority = aDefault ? aDefault.priority : 99;
+              const bPriority = bDefault ? bDefault.priority : 99;
+              return aPriority - bPriority;
             });
 
             return finalLinks.map((link, idx) => {
