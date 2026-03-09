@@ -231,6 +231,11 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                         const contactSection = document.getElementById('contact');
                                         if (contactSection) {
                                             contactSection.scrollIntoView({ behavior: 'smooth' });
+                                            // Trigger a custom event or update storage for package selection
+                                            const event = new CustomEvent('package-selected', {
+                                                detail: { name: pkg.name, price: pkg.price?.replace('₹', '') }
+                                            });
+                                            window.dispatchEvent(event);
                                         } else {
                                             window.location.href = '#contact';
                                         }
@@ -303,6 +308,11 @@ export function MentoriaPackagesSection({ title, subtitle, id, categories }: Sec
                                         const contactSection = document.getElementById('contact');
                                         if (contactSection) {
                                             contactSection.scrollIntoView({ behavior: 'smooth' });
+                                            // Trigger a custom event for package selection
+                                            const event = new CustomEvent('package-selected', {
+                                                detail: { name: pkg.title, price: pkg.price?.replace('₹', '') }
+                                            });
+                                            window.dispatchEvent(event);
                                         } else {
                                             window.location.href = '#contact';
                                         }

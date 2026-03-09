@@ -1,11 +1,143 @@
 ﻿'use client'
 
+import { useState, useEffect } from 'react'
 import { SectionProps } from '@/lib/sections/registry'
 import { urlForImage } from '@/lib/sanity'
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 export function ContactSection({ title, description, email, phone, address, formTitle, id, backgroundImage }: SectionProps) {
   const bgImageUrl = backgroundImage ? urlForImage(backgroundImage).width(1600).height(900).url() : null
   const hasContactInfo = email || phone || address
+
+  const [selectedPackage, setSelectedPackage] = useState<{ name: string; price: string } | null>(null)
+  const [couponCode, setCouponCode] = useState('')
+  const [discount, setDiscount] = useState<{ valid: boolean; discountType?: string; discountValue?: number } | null>(null)
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
+
+  const WORKER_URL = "https://mentoria-payment-worker.ur-subdomain.workers.dev" // User will update this
+
+  useEffect(() => {
+    const handlePackageSelection = (e: any) => {
+      setSelectedPackage(e.detail)
+    }
+    window.addEventListener('package-selected', handlePackageSelection)
+
+    // Load Razorpay Script
+    const script = document.createElement('script')
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      window.removeEventListener('package-selected', handlePackageSelection)
+    }
+  }, [])
+
+  const applyCoupon = async () => {
+    if (!couponCode) return
+    setIsApplyingCoupon(true)
+    try {
+      const response = await fetch(`${WORKER_URL}/validate-coupon`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ couponCode }),
+      })
+      const data = await response.json()
+      setDiscount(data)
+    } catch (error) {
+      console.error('Error applying coupon:', error)
+      setDiscount({ valid: false })
+    } finally {
+      setIsApplyingCoupon(false)
+    }
+  }
+
+  const calculateFinalPrice = () => {
+    if (!selectedPackage) return 0
+    let price = parseInt(selectedPackage.price.replace(/,/g, ''))
+    if (discount?.valid) {
+      if (discount.discountType === 'percentage' && discount.discountValue) {
+        price = Math.round(price * (1 - discount.discountValue / 100))
+      } else if (discount.discountType === 'fixed' && discount.discountValue) {
+        price = Math.max(0, price - discount.discountValue)
+      }
+    }
+    return price
+  }
+
+  const handlePayment = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!selectedPackage) {
+      alert('Please select a package first')
+      return
+    }
+
+    setIsProcessing(true)
+    const formData = new FormData(e.target as HTMLFormElement)
+    const name = formData.get('name') as string
+    const email = formData.get('email') as string
+
+    try {
+      // 1. Create Order via Worker
+      const orderResponse = await fetch(`${WORKER_URL}/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: calculateFinalPrice() * 100, // paise
+          currency: 'INR',
+          couponCode: discount?.valid ? couponCode : null,
+          receipt: `rcpt_${Date.now()}`,
+        }),
+      })
+
+      const orderData = await orderResponse.json()
+
+      if (!orderData.id) {
+        throw new Error('Failed to create order')
+      }
+
+      // 2. Open Razorpay Checkout
+      const options = {
+        key: 'rzp_live_ZDRBsLXKmZI6Gu', // Provided by user
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'Mentoria Packages',
+        description: `Payment for ${selectedPackage.name}`,
+        order_id: orderData.id,
+        prefill: {
+          name: name,
+          email: email,
+        },
+        handler: function (response: any) {
+          alert('Payment Successful! Payment ID: ' + response.razorpay_payment_id)
+          // Here you would typically verify the payment on the server
+          // and send the confirmation email.
+        },
+        modal: {
+          ondismiss: function () {
+            setIsProcessing(false)
+          },
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      }
+
+      const rzp = new window.Razorpay(options)
+      rzp.open()
+    } catch (error) {
+      console.error('Payment Error:', error)
+      alert('Something went wrong with the payment process.')
+    } finally {
+      setIsProcessing(false)
+    }
+  }
 
   return (
     <section
@@ -134,7 +266,29 @@ export function ContactSection({ title, description, email, phone, address, form
             }}
           >
             {formTitle && <h3 style={{ fontSize: '1.75rem', marginBottom: '30px', color: 'var(--color-text-primary)', fontWeight: '600' }}>{formTitle}</h3>}
+
+            {selectedPackage && (
+              <div style={{
+                backgroundColor: 'rgba(var(--color-primary-rgb), 0.05)',
+                padding: '15px',
+                borderRadius: '8px',
+                marginBottom: '20px',
+                border: '1px solid var(--color-primary)'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontWeight: '600' }}>Selected: {selectedPackage.name}</span>
+                  <span style={{ fontWeight: 'bold', color: 'var(--color-primary)' }}>₹{calculateFinalPrice().toLocaleString()}</span>
+                </div>
+                {discount?.valid && (
+                  <div style={{ fontSize: '0.85rem', color: 'green', marginTop: '5px' }}>
+                    Coupon applied! Original price: ₹{selectedPackage.price}
+                  </div>
+                )}
+              </div>
+            )}
+
             <form
+              onSubmit={handlePayment}
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -143,6 +297,8 @@ export function ContactSection({ title, description, email, phone, address, form
             >
               <input
                 type="text"
+                name="name"
+                required
                 placeholder="Your Name"
                 style={{
                   padding: '16px',
@@ -154,17 +310,11 @@ export function ContactSection({ title, description, email, phone, address, form
                   transition: 'border-color 0.3s, box-shadow 0.3s',
                   outline: 'none',
                 }}
-                onFocus={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-primary)'
-                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(var(--color-primary-rgb), 0.1)'
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
               />
               <input
                 type="email"
+                name="email"
+                required
                 placeholder="Your Email"
                 style={{
                   padding: '16px',
@@ -176,41 +326,51 @@ export function ContactSection({ title, description, email, phone, address, form
                   transition: 'border-color 0.3s, box-shadow 0.3s',
                   outline: 'none',
                 }}
-                onFocus={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-primary)'
-                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(var(--color-primary-rgb), 0.1)'
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
               />
-              <textarea
-                placeholder="Your Message"
-                rows={5}
-                style={{
-                  padding: '16px',
-                  border: '1px solid rgba(0,0,0,0.1)',
-                  borderRadius: '8px',
-                  fontSize: '1rem',
-                  resize: 'vertical',
-                  backgroundColor: 'var(--color-surface)',
-                  color: 'var(--color-text-primary)',
-                  transition: 'border-color 0.3s, box-shadow 0.3s',
-                  outline: 'none',
-                  minHeight: '120px',
-                }}
-                onFocus={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-primary)'
-                  e.currentTarget.style.boxShadow = '0 0 0 3px rgba(var(--color-primary-rgb), 0.1)'
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
-              />
+
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <input
+                  type="text"
+                  placeholder="Coupon Code"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
+                    backgroundColor: 'var(--color-surface)',
+                    color: 'var(--color-text-primary)',
+                    outline: 'none',
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={applyCoupon}
+                  disabled={isApplyingCoupon || !couponCode}
+                  style={{
+                    padding: '0 20px',
+                    backgroundColor: 'white',
+                    color: 'var(--color-primary)',
+                    border: '1px solid var(--color-primary)',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    opacity: isApplyingCoupon ? 0.5 : 1
+                  }}
+                >
+                  {isApplyingCoupon ? '...' : 'Apply'}
+                </button>
+              </div>
+
+              {discount && !discount.valid && (
+                <div style={{ color: 'red', fontSize: '0.85rem' }}>Invalid coupon code</div>
+              )}
+
               <button
                 type="submit"
+                disabled={isProcessing}
                 style={{
                   padding: '16px 32px',
                   backgroundColor: 'var(--color-primary)',
@@ -218,24 +378,15 @@ export function ContactSection({ title, description, email, phone, address, form
                   border: 'none',
                   borderRadius: '8px',
                   fontSize: '1.1rem',
-                  cursor: 'pointer',
+                  cursor: isProcessing ? 'not-allowed' : 'pointer',
                   fontWeight: '600',
                   marginTop: '10px',
                   transition: 'transform 0.2s, box-shadow 0.2s, opacity 0.2s',
                   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)'
-                  e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
-                  e.currentTarget.style.opacity = '0.9'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                  e.currentTarget.style.opacity = '1'
+                  opacity: isProcessing ? 0.7 : 1
                 }}
               >
-                Send Message
+                {isProcessing ? 'Processing...' : selectedPackage ? `Pay ₹${calculateFinalPrice().toLocaleString()}` : 'Send Message'}
               </button>
             </form>
           </div>
