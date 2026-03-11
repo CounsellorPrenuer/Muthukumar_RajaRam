@@ -1,0 +1,185 @@
+﻿
+> remixable-template@1.0.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+node.exe : Failed to 
+compile.
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (Failed to    
+ compile.:String)     
+[], RemoteExcepti    
+on
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+
+./node_modules/@portab
+letext/editor/lib/inde
+x.js
+Module not found: 
+Package path 
+./compiler-runtime is 
+not exported from 
+package C:\Users\Mihik
+a\OneDrive\Desktop\San
+tosh\node_modules\reac
+t (see exports field 
+in C:\Users\Mihika\One
+Drive\Desktop\Santosh\
+node_modules\react\pac
+kage.json)
+
+https://nextjs.org/doc
+s/messages/module-not-
+found
+
+Import trace for 
+requested module:
+./node_modules/sanity/
+lib/index.js
+./sanity.config.ts
+./app/studio/[[...inde
+x]]/page.tsx
+
+./node_modules/@portab
+letext/editor/lib/plug
+ins/index.js
+Module not found: 
+Package path 
+./compiler-runtime is 
+not exported from 
+package C:\Users\Mihik
+a\OneDrive\Desktop\San
+tosh\node_modules\reac
+t (see exports field 
+in C:\Users\Mihika\One
+Drive\Desktop\Santosh\
+node_modules\react\pac
+kage.json)
+
+https://nextjs.org/doc
+s/messages/module-not-
+found
+
+Import trace for 
+requested module:
+./node_modules/sanity/
+lib/index.js
+./sanity.config.ts
+./app/studio/[[...inde
+x]]/page.tsx
+
+./node_modules/@portab
+letext/plugin-characte
+r-pair-decorator/dist/
+index.js
+Module not found: 
+Package path 
+./compiler-runtime is 
+not exported from 
+package C:\Users\Mihik
+a\OneDrive\Desktop\San
+tosh\node_modules\reac
+t (see exports field 
+in C:\Users\Mihika\One
+Drive\Desktop\Santosh\
+node_modules\react\pac
+kage.json)
+
+https://nextjs.org/doc
+s/messages/module-not-
+found
+
+Import trace for 
+requested module:
+./node_modules/@portab
+letext/plugin-markdown
+-shortcuts/dist/index.
+js
+./node_modules/sanity/
+lib/index.js
+./sanity.config.ts
+./app/studio/[[...inde
+x]]/page.tsx
+
+./node_modules/@portab
+letext/plugin-input-ru
+le/dist/index.js
+Module not found: 
+Package path 
+./compiler-runtime is 
+not exported from 
+package C:\Users\Mihik
+a\OneDrive\Desktop\San
+tosh\node_modules\reac
+t (see exports field 
+in C:\Users\Mihika\One
+Drive\Desktop\Santosh\
+node_modules\react\pac
+kage.json)
+
+https://nextjs.org/doc
+s/messages/module-not-
+found
+
+Import trace for 
+requested module:
+./node_modules/@portab
+letext/plugin-markdown
+-shortcuts/dist/index.
+js
+./node_modules/sanity/
+lib/index.js
+./sanity.config.ts
+./app/studio/[[...inde
+x]]/page.tsx
+
+./node_modules/@portab
+letext/plugin-markdown
+-shortcuts/dist/index.
+js
+Module not found: 
+Package path 
+./compiler-runtime is 
+not exported from 
+package C:\Users\Mihik
+a\OneDrive\Desktop\San
+tosh\node_modules\reac
+t (see exports field 
+in C:\Users\Mihika\One
+Drive\Desktop\Santosh\
+node_modules\react\pac
+kage.json)
+
+https://nextjs.org/doc
+s/messages/module-not-
+found
+
+Import trace for 
+requested module:
+./node_modules/sanity/
+lib/index.js
+./sanity.config.ts
+./app/studio/[[...inde
+x]]/page.tsx
+
+
+> Build failed 
+because of webpack 
+errors

@@ -5,44 +5,9 @@ import { SectionProps } from '@/lib/sections/registry'
 export function ProgramsByUserType({ title, programs }: SectionProps & { programs?: Array<{ title: string, description: string, cta: string, link: string }> }) {
 
     // Fallback if no programs are provided from Sanity yet
-    const displayPrograms = programs?.length && programs.length > 0 ? programs : [
-        {
-            title: 'School Students (8-9)',
-            description: 'Choose the right stream and subjects for your future.',
-            cta: 'Explore Options',
-            link: '#',
-        },
-        {
-            title: 'School Students (10-12)',
-            description: 'Discover courses and exams to prepare for your dream career.',
-            cta: 'Get Guidance',
-            link: '#',
-        },
-        {
-            title: 'College Students (1st and 2nd year)',
-            description: 'Select electives, internships, and career paths early.',
-            cta: 'Plan Your Path',
-            link: '#',
-        },
-        {
-            title: 'College Students (above 2 years)',
-            description: 'Prepare for jobs, higher studies, and career transitions.',
-            cta: 'Advance Your Career',
-            link: '#',
-        },
-        {
-            title: 'Working Professionals (1-5 years)',
-            description: 'Make practical career switches and upskill for growth.',
-            cta: 'Upskill & Switch',
-            link: '#',
-        },
-        {
-            title: 'Working Professionals (above 5 years)',
-            description: 'Strategize for leadership, entrepreneurship, or new directions.',
-            cta: 'Lead & Innovate',
-            link: '#',
-        },
-    ];
+    const displayPrograms = programs || [];
+
+    if (!displayPrograms.length) return null;
 
     return (
         <section

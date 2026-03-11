@@ -28,18 +28,20 @@ export function HeroSection({ heading, subheading, cta, backgroundImage, globalH
           maxWidth: '1200px',
           width: '100%',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '60px',
+          gridTemplateColumns: displayImage ? '1fr 1fr' : '1fr',
+          gap: displayImage ? '60px' : '0',
           alignItems: 'center',
+          textAlign: displayImage ? 'left' : 'center',
         }}
         className="hero-container"
       >
-        <div style={{ textAlign: 'left' }}>
+        <div style={{ textAlign: displayImage ? 'left' : 'center' }}>
           <h1 style={{
             fontSize: '4.5rem',
             marginBottom: '24px',
             lineHeight: '1.05',
             fontWeight: '700',
+            textAlign: displayImage ? 'left' : 'center',
             color: 'var(--color-primary)' // Cold Sky Blue
           }}>
             {heading}
@@ -48,7 +50,10 @@ export function HeroSection({ heading, subheading, cta, backgroundImage, globalH
             fontSize: '1.3rem',
             marginBottom: '42px',
             color: 'var(--color-text-secondary)', // Medium Cool Gray
-            maxWidth: '560px',
+            maxWidth: displayImage ? '560px' : '800px',
+            marginLeft: displayImage ? '0' : 'auto',
+            marginRight: displayImage ? '0' : 'auto',
+            textAlign: displayImage ? 'left' : 'center',
             lineHeight: '1.4',
             fontWeight: '500'
           }}>
@@ -57,7 +62,8 @@ export function HeroSection({ heading, subheading, cta, backgroundImage, globalH
           <a
             href={cta?.link || '#programs'}
             style={{
-              display: 'inline-block',
+              display: displayImage ? 'inline-block' : 'table',
+              margin: displayImage ? '0' : '0 auto',
               backgroundColor: 'var(--color-primary)',
               color: 'white',
               padding: '14px 40px',
@@ -74,38 +80,34 @@ export function HeroSection({ heading, subheading, cta, backgroundImage, globalH
           </a>
         </div>
 
-        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-          <div style={{
-            backgroundColor: 'white',
-            padding: '30px',
-            borderRadius: '12px',
-            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
-            width: '100%',
-            maxWidth: '600px',
-            border: '1px solid #f1f5f9',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '180px'
-          }}>
-            {displayImage ? (
-              <Image
-                src={urlForImage(displayImage).url()}
-                alt={displayImage.alt || 'Hero Image'}
-                width={500}
-                height={200}
-                style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
-                priority
-              />
-            ) : (
-              <div style={{ color: '#94a3b8', fontSize: '1rem', textAlign: 'center' }}>
-                Go to Sanity Studio {'->'} Home Page {'->'} Sections {'->'} Hero<br />
-                OR Go to Site Configuration {'->'} Hero / Banner Photo<br />
-                to upload your widescreen photo
-              </div>
-            )}
+        {displayImage && (
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+            <div style={{
+              backgroundColor: 'white',
+              padding: '30px',
+              borderRadius: '12px',
+              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+              width: '100%',
+              maxWidth: '600px',
+              border: '1px solid #f1f5f9',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '180px'
+            }}>
+              {displayImage?.asset && (
+                <Image
+                  src={urlForImage(displayImage).url()}
+                  alt={displayImage.alt || 'Hero Image'}
+                  width={500}
+                  height={200}
+                  style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+                  priority
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <style jsx>{`
         @media (max-width: 968px) {

@@ -1,5 +1,5 @@
 {
-  "name": "remixable-template",
+  "name": "santosh-template",
   "version": "1.0.0",
   "description": "Reusable website template with section-based page builder",
   "type": "module",
@@ -9,16 +9,17 @@
     "start": "next start",
     "lint": "next lint",
     "setup": "node scripts/setup.ts",
-    "seed": "node scripts/seed-dataset.ts"
+    "seed": "npx tsx scripts/seed-dataset.ts",
+    "clear": "npx tsx scripts/clear-dataset.ts"
   },
   "dependencies": {
     "@sanity/client": "^6.0.0",
     "@sanity/image-url": "^1.2.0",
     "next": "^14.0.0",
-    "next-sanity": "^12.1.0",
+    "next-sanity": "^9.8.30",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sanity": "^5.13.0",
+    "sanity": "^3.99.0",
     "styled-components": "^6.3.11"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@
 
 export default {
   name: 'site',
-  title: 'CareerIPA - Site Settings',
+  title: 'Santosh - Site Settings',
   type: 'document',
   // This makes it a singleton - only one document of this type can exist
   __experimental_actions: ['create', 'update', /*'delete'*/],

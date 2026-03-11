@@ -21,7 +21,7 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [dynamicPages, setDynamicPages] = useState<{ title: string, slug: string }[]>(initialPages || [])
 
-  const logoImageUrl = logoImage ? urlForImage(logoImage).url() : null
+  const logoImageUrl = logoImage?.asset ? urlForImage(logoImage).url() : null
   const logoAlt = logoImage?.alt || logo || 'Logo'
 
   useEffect(() => {
@@ -114,20 +114,16 @@ export function Navbar({ logo, logoImage, links, pages: initialPages }: NavbarPr
               }}
               priority
             />
-          ) : (
-            <Image
-              src="/logo.svg"
-              alt="CareerIPA Logo"
-              width={52}
-              height={52}
-              style={{
-                height: isScrolled ? '42px' : '52px',
-                width: 'auto',
-                transition: 'height 0.3s ease',
-              }}
-              priority
-            />
-          )}
+          ) : logo ? (
+            <span style={{
+              fontSize: '1.5rem',
+              fontWeight: '700',
+              color: 'var(--color-primary)',
+              transition: 'all 0.3s ease'
+            }}>
+              {logo}
+            </span>
+          ) : null}
         </a>
 
         {/* Desktop Navigation Links - CENTERED */}

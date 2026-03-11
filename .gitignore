@@ -15,15 +15,29 @@ build_output/
 # Dependencies
 node_modules/
 
-# Sanity - exclude from git
-sanity/
-sanity.config.ts
-sanity.cli.ts
-sanity-schemas-oversimplify/
+# Sanity
+# Allow tracking of Sanity config and schemas
+!sanity/
+!sanity.config.ts
+!sanity.cli.ts
+sanity/node_modules/
+sanity/.sanity/
+sanity/dist/
+!sanity/package.json
+!sanity/sanity.config.js
+!sanity/sanity.cli.js
+!sanity/schemaTypes.js
+!sanity/schemas/
+!*.mjs
+!*.js
+# But still ignore local test files and large JSON dumps
+sanity-test.js
+sanity-test.mjs
 *.json
 !package.json
 !tsconfig.json
 !next.config.js
+!sanity/site_config_full.json
 
 # Temporary/Log files
 *_log.txt

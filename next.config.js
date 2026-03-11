@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/Muthukumar_RajaRam',
+  // No basePath for root hosting
   trailingSlash: true,
   reactStrictMode: true,
   images: {

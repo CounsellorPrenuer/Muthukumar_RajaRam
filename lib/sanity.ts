@@ -22,7 +22,7 @@ export const sanityClient = createClient({
   apiVersion,
   useCdn: false, // Turn off CDN when using token for freshest data
   token,
-  perspective: 'published',
+  perspective: 'previewDrafts',
 })
 
 /**
@@ -31,6 +31,14 @@ export const sanityClient = createClient({
 const builder = imageUrlBuilder(sanityClient)
 
 export function urlForImage(source: any) {
+  if (!source || !source.asset) {
+    return {
+      width: () => urlForImage(null),
+      height: () => urlForImage(null),
+      fit: () => urlForImage(null),
+      url: () => '',
+    } as any
+  }
   return builder.image(source)
 }
 

@@ -56,11 +56,6 @@ function buildLegacySections(legacyContent: any) {
     })
   }
 
-  sections.push({
-    _key: 'career-ipa-programs',
-    _type: 'programsByUserTypeSection',
-    title: 'Programs by User Type',
-  })
 
 
   const mappedTestimonials = legacyContent?.testimonials?.length

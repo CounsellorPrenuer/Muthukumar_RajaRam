@@ -6,7 +6,7 @@ import { Navbar } from '@/components/Navbar'
 import { getNavbar, getSiteConfig } from '@/lib/sanity'
 
 export const metadata: Metadata = {
-  title: 'CareerIPA - Scientific Career Clarity',
+  title: 'Santosh - Scientific Career Clarity',
   description: 'Career Assessment based on Interest, Personality and Ability for Students & Professionals',
 }
 

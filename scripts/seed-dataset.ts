@@ -2,7 +2,6 @@ import { createClient } from '@sanity/client'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import dotenv from 'dotenv'
 
 // Load environment variables manually
 const envPath = path.join(process.cwd(), '.env.local')
@@ -63,17 +62,9 @@ async function seed() {
     await client.createOrReplace({
         _id: 'site-config',
         _type: 'site',
-        title: 'CareerIPA',
+        title: 'Santosh',
         description: 'Scientific Career Clarity for Students & Professionals',
-        logo: 'CIPA',
-        logoImage: logoAssetId ? {
-            _type: 'image',
-            asset: {
-                _type: 'reference',
-                _ref: logoAssetId,
-            },
-            alt: 'CareerIPA Logo',
-        } : undefined,
+        // Logo is managed via Studio now
         primaryColor: '#2563eb', // blue-600
         primaryHoverColor: '#1d4ed8', // blue-700
     })
@@ -103,7 +94,7 @@ async function seed() {
                 _key: 'hero-1',
                 _type: 'heroSection',
                 heading: 'Scientific Career Clarity for Students & Professionals',
-                subheading: 'CareerIPA combines psychometrics, mentoring, and structured planning to align education, income potential, and long-term growth.',
+                subheading: 'Santosh combines psychometrics, mentoring, and structured planning to align education, income potential, and long-term growth.',
                 cta: {
                     text: 'View Programs',
                     link: '/programs',

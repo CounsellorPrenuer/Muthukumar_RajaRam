@@ -1,0 +1,14 @@
+﻿Pages: [ { _id: 'home-page', slug: 'home', title: 'Home' } ]
+Navbar: {
+  _createdAt: '2026-03-07T14:04:27Z',
+  _id: 'navbar-config',
+  _rev: 'JRIowonhkHAgqqci2T1TUW',
+  _type: 'navbar',
+  _updatedAt: '2026-03-07T14:04:27Z',
+  links: [
+    { _key: '1', href: '/programs', label: 'Programs' },
+    { _key: '2', href: '/dashboard', label: 'Dashboard' },
+    { _key: '3', href: '/blog', label: 'Blog' },
+    { _key: '4', href: '/contact', label: 'Contact' }
+  ]
+}

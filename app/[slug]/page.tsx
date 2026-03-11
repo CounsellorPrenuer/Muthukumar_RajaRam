@@ -84,6 +84,8 @@ export default async function Page({ params }: { params: PageParams }) {
   )
 }
 
+export const dynamic = 'force-static'
+
 export async function generateStaticParams() {
   try {
     const [pages, navbar] = await Promise.all([
